@@ -1,0 +1,25 @@
+name: domain
+description: Domain layer
+version: 0.0.1
+publish_to: none
+
+environment:
+  sdk: '>=3.1.3 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  ###########################
+  # PLUGINS AND PACKAGES
+
+  equatable: any
+  rxdart: any
+  shared_preferences: any
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: any
+
+flutter:

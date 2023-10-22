@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "778517252856",
+    "project_id": "equia-flutter",
+    "storage_bucket": "equia-flutter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:778517252856:android:744873d4fcb68d1b03c90d",
+        "android_client_info": {
+          "package_name": "com.yeniellandestoy.equia.equia"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC7m93sH9gfvxP4FhdPbFDb-stZF6IERbM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
