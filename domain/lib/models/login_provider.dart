@@ -1,0 +1,1 @@
+enum LoginProvider { google } // TODO: apple, email

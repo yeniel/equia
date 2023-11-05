@@ -25,6 +25,9 @@ dependencies:
   equatable: any
   path: any
   sqflite: any
+  google_sign_in: ^6.1.5
+  firebase_core: ^2.21.0
+  firebase_auth: ^4.12.1
 
 dev_dependencies:
   flutter_test:

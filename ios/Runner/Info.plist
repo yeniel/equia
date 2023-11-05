@@ -45,5 +45,22 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+    <!-- Google Sign-in Section -->
+    <key>CFBundleURLTypes</key>
+    <array>
+        <dict>
+            <key>CFBundleTypeRole</key>
+            <string>Editor</string>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <!-- TODO Replace this value: -->
+                <!-- Copied from GoogleService-Info.plist key REVERSED_CLIENT_ID -->
+                <string>com.googleusercontent.apps.778517252856-3glc8u3jngstt30pu439if2qg3e7uo34</string>
+            </array>
+        </dict>
+    </array>
+    <!-- End of the Google Sign-in Section -->
+    <key>LSRequiresIPhoneOS</key>
+    <true/>
 </dict>
 </plist>

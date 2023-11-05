@@ -12,7 +12,20 @@
           "package_name": "com.yeniellandestoy.equia.equia"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "778517252856-j2es6bqpkcgdn3mvp0412o6r4po6gndn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yeniellandestoy.equia.equia",
+            "certificate_hash": "f4e7d0d538b25c11dec56d02000c8ca75bb6d211"
+          }
+        },
+        {
+          "client_id": "778517252856-8aefindf06jeoaobssf431ptse3se4tr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyC7m93sH9gfvxP4FhdPbFDb-stZF6IERbM"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "778517252856-8aefindf06jeoaobssf431ptse3se4tr.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "778517252856-3glc8u3jngstt30pu439if2qg3e7uo34.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.yeniellandestoy.equia.equia"
+              }
+            }
+          ]
         }
       }
     }
