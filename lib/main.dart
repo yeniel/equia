@@ -8,5 +8,5 @@ Future<void> main() async {
 
   AuthService.initializeFirebase();
 
-  runApp(const MyApp());
+  runApp(const App());
 }
