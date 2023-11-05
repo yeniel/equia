@@ -1,6 +1,8 @@
 import 'package:domain/domain.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'auth_error.dart';
@@ -8,18 +10,12 @@ import 'auth_response.dart';
 import 'error_code.dart';
 
 class AuthService {
-  static final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
-  static final GoogleSignIn _googleSignIn = GoogleSignIn();
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   AuthService();
 
-  static Future<FirebaseApp> initializeFirebase() async {
-    FirebaseApp firebaseApp = await Firebase.initializeApp();
-
-    return firebaseApp;
-  }
-
-  static Future<LoginResult?> login(LoginProvider? loginProvider) async {
+  Future<LoginResult?> login(LoginProvider? loginProvider) async {
     switch (loginProvider) {
       case LoginProvider.google:
         return _loginWithGoogle();
@@ -28,19 +24,19 @@ class AuthService {
     }
   }
 
-  static Future<void> logout() {
+  Future<void> logout() {
     return Future.value(null);
   }
 
-  static User? get currentUser => _firebaseAuth.currentUser;
+  User? get currentUser => _firebaseAuth.currentUser;
 
-  static Future<LoginResult> _loginWithGoogle() async {
+  Future<LoginResult> _loginWithGoogle() async {
     AuthResponse response = await loginWithGoogle();
 
     return Future.value(_resultMapper(response.success, response.error));
   }
 
-  static Future<AuthResponse> loginWithGoogle() async {
+  Future<AuthResponse> loginWithGoogle() async {
     GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
 
     if (googleUser != null) {
@@ -59,7 +55,7 @@ class AuthService {
   }
 
 
-  static LoginResult _resultMapper(bool success, AuthError? error) {
+  LoginResult _resultMapper(bool success, AuthError? error) {
     if (success) {
       return LoginResult.ok;
     } else if (error != null) {
@@ -88,7 +84,7 @@ class AuthService {
     return LoginResult.generic;
   }
 
-  static AuthError _generateError(e) {
+  AuthError _generateError(e) {
     if (e is PlatformException) {
       return AuthError(_errorMapper(e.code), e.message);
     } else if (e is FirebaseAuthException) {
@@ -98,7 +94,7 @@ class AuthService {
     }
   }
 
-  static ErrorCode _errorMapper(String errorCode) {
+  ErrorCode _errorMapper(String errorCode) {
     switch (errorCode) {
       case "ERROR_USER_DISABLED":
       case "user-disabled":
