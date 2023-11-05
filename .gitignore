@@ -42,5 +42,7 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+/android/key.propertie
 
 ios/Runner/GoogleService-Info.plist
+lib/presentation/others/api_keys.dart
