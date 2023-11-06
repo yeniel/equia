@@ -1,8 +1,5 @@
 import 'package:domain/domain.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'auth_error.dart';
@@ -14,6 +11,12 @@ class AuthService {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   AuthService();
+
+  UserModel? get currentUser {
+    User? firebaseUser = _firebaseAuth.currentUser;
+
+    return UserModel(id: firebaseUser?.uid ?? "", name: firebaseUser?.displayName, email: firebaseUser?.email);
+  }
 
   Future<LoginResult?> login(LoginProvider? loginProvider) async {
     switch (loginProvider) {
@@ -28,7 +31,17 @@ class AuthService {
     return Future.value(null);
   }
 
-  User? get currentUser => _firebaseAuth.currentUser;
+  Stream<AuthenticationStatus> get status {
+    return FirebaseAuth.instance
+      .userChanges()
+      .map((firebaseUser) {
+        if (firebaseUser == null) {
+          return AuthenticationStatus.unauthenticated;
+        } else {
+          return AuthenticationStatus.authenticated;
+        }
+      });
+  }
 
   Future<LoginResult> _loginWithGoogle() async {
     AuthResponse response = await loginWithGoogle();

@@ -1,49 +1,113 @@
+import 'package:data/data.dart';
+import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+
+import 'presentation/authentication/bloc/authentication_bloc.dart';
+import 'presentation/home/home.dart';
+import 'presentation/login/login.dart';
+import 'presentation/splash/splash.dart';
 
 class App extends StatelessWidget {
-  const App({super.key});
+  const App({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Equia',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+    return BlocProvider(
+      create: (_) => AuthenticationBloc(
+        authService: context.read<AuthService>(),
       ),
-      home: const MyHomePage(title: 'Equia'),
+      child: const AppView(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
+class AppView extends StatefulWidget {
+  const AppView({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  AppViewState createState() => AppViewState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class AppViewState extends State<AppView> {
+  final _navigatorKey = GlobalKey<NavigatorState>();
+
+  NavigatorState get _navigator => _navigatorKey.currentState!;
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+    listenLocalNotifications();
+
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.green,
       ),
-      body: const Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-          ],
-        ),
-      ),
+      // theme: ThemeData(
+      //   colorScheme: const ColorScheme(
+      //     brightness: Brightness.light,
+      //     primary: Colores.acelga,
+      //     onPrimary: Colors.white,
+      //     secondary: Colores.acelga,
+      //     onSecondary: Colors.white,
+      //     error: Colores.rabano,
+      //     onError: Colors.white,
+      //     background: Colors,
+      //     onBackground: onBackground,
+      //     surface: surface,
+      //     onSurface: onSurface,
+      //   ),
+      // ),
+      navigatorKey: _navigatorKey,
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('en', ''),
+        Locale('es', ''),
+      ],
+      builder: (context, child) {
+        return BlocListener<AuthenticationBloc, AuthenticationState>(
+          listener: (context, state) {
+            switch (state.status) {
+              case AuthenticationStatus.authenticated:
+                _navigator.pushAndRemoveUntil<void>(
+                  HomePage.route(),
+                      (route) => false,
+                );
+                break;
+              case AuthenticationStatus.unauthenticated:
+                _navigator.pushAndRemoveUntil<void>(
+                  LoginPage.route(),
+                      (route) => false,
+                );
+                break;
+              default:
+                break;
+            }
+          },
+          child: child,
+        );
+      },
+      onGenerateRoute: (_) => SplashPage.route(),
     );
+  }
+
+  void listenLocalNotifications() {
+    // AwesomeNotifications().actionStream.listen((ReceivedNotification receivedNotification) {
+    // Navigator.of(context).pushNamed(
+    //     '/NotificationPage',
+    //     arguments: {
+    //       // your page params. I recommend you to pass the
+    //       // entire *receivedNotification* object
+    //       id: receivedNotification.id
+    //     }
+    // );
+    // });
   }
 }
