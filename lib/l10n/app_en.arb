@@ -1,6 +1,6 @@
 {
   "appName": "Equia",
   "loginHead": "Login",
-  "login": "Login",
+  "login": "Login with Google",
   "loading_indicator": "Please wait"
 }

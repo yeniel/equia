@@ -28,7 +28,7 @@ class AuthService {
   }
 
   Future<void> logout() {
-    return Future.value(null);
+    return _firebaseAuth.signOut();
   }
 
   Stream<AuthenticationStatus> get status {
