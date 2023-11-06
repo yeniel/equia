@@ -43,7 +43,7 @@ class AppViewState extends State<AppView> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.green,
+        primarySwatch: Colors.purple,
       ),
       // theme: ThemeData(
       //   colorScheme: const ColorScheme(

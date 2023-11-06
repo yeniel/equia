@@ -85,6 +85,7 @@ class _HomeViewState extends State<HomeView> {
               icon: const Icon(Icons.more_time_rounded),
             ),
             _HomeTabButton(
+              key: keyAccountTab,
               groupValue: selectedTab,
               value: HomeTab.account,
               icon: const Icon(Icons.manage_accounts_rounded),
@@ -102,7 +103,7 @@ class _HomeViewState extends State<HomeView> {
   void createTutorial() {
     tutorialCoachMark = TutorialCoachMark(
       targets: _createTargets(),
-      colorShadow: Colors.green,
+      colorShadow: Colors.purple,
       paddingFocus: 10,
       opacityShadow: 0.8,
       hideSkip: true,
@@ -116,7 +117,7 @@ class _HomeViewState extends State<HomeView> {
       TargetFocus(
         identify: 'keyAgendaTab',
         keyTarget: keyAgendaTab,
-        alignSkip: Alignment.bottomRight,
+        alignSkip: Alignment.bottomLeft,
         enableOverlayTab: true,
         enableTargetTab: true,
         contents: [
@@ -128,7 +129,7 @@ class _HomeViewState extends State<HomeView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    'En la pestaña inicial siempre verás tu pedido actual',
+                    'En la pestaña inicial Agenda, verás la lista de tus próximas tareas',
                     style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
                   ),
                 ],
@@ -138,11 +139,12 @@ class _HomeViewState extends State<HomeView> {
         ],
       ),
     );
+
     targets.add(
       TargetFocus(
         identify: 'keyPlannerTab',
         keyTarget: keyPlannerTab,
-        alignSkip: Alignment.bottomRight,
+        alignSkip: Alignment.bottomLeft,
         enableOverlayTab: true,
         enableTargetTab: true,
         contents: [
@@ -154,7 +156,7 @@ class _HomeViewState extends State<HomeView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    'Aquí podrás consultar todas las cestas que tenemos',
+                    'Aquí podrás ver la planificación de tareas y reparto equitativo del tiempo',
                     style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
                   ),
                 ],
@@ -164,6 +166,7 @@ class _HomeViewState extends State<HomeView> {
         ],
       ),
     );
+
     targets.add(
       TargetFocus(
         identify: 'keyTimeBankTab',
@@ -180,7 +183,34 @@ class _HomeViewState extends State<HomeView> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    'Además de las cestas podrás añadir productos extra a tus pedidos',
+                    'Aquí podrás crear tareas puntuales que se incluirán en el banco de tiempo',
+                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
+                  ),
+                ],
+              );
+            },
+          ),
+        ],
+      ),
+    );
+
+    targets.add(
+      TargetFocus(
+        identify: 'keyAccountTab',
+        keyTarget: keyAccountTab,
+        alignSkip: Alignment.bottomRight,
+        enableOverlayTab: true,
+        enableTargetTab: true,
+        contents: [
+          TargetContent(
+            align: ContentAlign.top,
+            builder: (context, controller) {
+              return const Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    'Aquí podrás ver toda la información de tu cuenta',
                     style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
                   ),
                 ],

@@ -27,6 +27,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final AnalyticsManager _analyticsManager;
 
   Future<void> _onHomeSetTab(HomeSetTabEvent event, Emitter<HomeState> emit) async {
+    // TODO: Comprobar que esto no se ejecuta siempre al iniciar, que los logEvent solo se ejecuten solo cuando el usuario selecciona una tab
+
     emit(HomeTabSetState(tab: event.tab));
 
     switch (event.tab) {
