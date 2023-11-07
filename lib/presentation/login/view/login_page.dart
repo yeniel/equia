@@ -66,6 +66,7 @@ class LoginView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(S.loginHead, style: textTheme.headlineMedium, textAlign: TextAlign.center),
+            const Image(image: AssetImage('assets/equia_logo_1024.png')),
             const SizedBox(height: 8),
             _LoginButton(),
           ],
