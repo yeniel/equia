@@ -2,5 +2,10 @@
   "appName": "Ecosecha",
   "loginHead": "Identifícate",
   "login": "Iniciar sesión",
-  "loading_indicator": "Por favor espere"
+  "logout": "Cerrar sesión",
+  "loading_indicator": "Por favor espere",
+  "version": "Versión",
+  "logged_in": "Sesión iniciada con ",
+  "config": "Configuración",
+  "account": "Cuenta"
 }

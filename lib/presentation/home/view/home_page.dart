@@ -1,5 +1,6 @@
 import 'package:data/data.dart';
 import 'package:domain/domain.dart';
+import 'package:equia/presentation/config/view/config_page.dart';
 import 'package:equia/presentation/home/bloc/home_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -58,8 +59,8 @@ class _HomeViewState extends State<HomeView> {
     return Scaffold(
       body: IndexedStack(
         index: selectedTab.index,
-        // TODO: children: const [AgendaPage(), PlannerPage(), TimeBankPage(), AccountPage()],
-        children: const [],
+        // TODO: children: const [AgendaPage(), PlannerPage(), TimeBankPage()],
+        children: const [ConfigPage(), ConfigPage(), ConfigPage(), ConfigPage()],
       ),
       bottomNavigationBar: BottomAppBar(
         shape: const CircularNotchedRectangle(),

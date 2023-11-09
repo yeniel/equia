@@ -2,5 +2,10 @@
   "appName": "Equia",
   "loginHead": "Login",
   "login": "Login with Google",
-  "loading_indicator": "Please wait"
+  "logout": "Logout",
+  "loading_indicator": "Please wait",
+  "version": "Version",
+  "logged_in": "Logged in with ",
+  "config": "Config",
+  "account": "Account"
 }
