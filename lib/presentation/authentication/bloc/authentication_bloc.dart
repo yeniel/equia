@@ -44,7 +44,7 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
         final currentUser = _authService.currentUser;
 
         if (currentUser != null) {
-          _userRepository.updateUser(userModel: currentUser);
+          _userRepository.updateUserProfile(userProfile: currentUser.profile);
           return emit(AuthenticationState.authenticated(currentUser));
         } else {
           return emit(const AuthenticationState.unauthenticated());

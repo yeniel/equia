@@ -19,7 +19,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     var user = _authService.currentUser;
 
     if (user != null) {
-      _analyticsManager.setUserId(user.id.toString());
+      _analyticsManager.setUserId(user.uid.toString());
     }
   }
 

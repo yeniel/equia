@@ -16,3 +16,4 @@ export 'models/analytics/time_bank_event.dart';
 export 'models/analytics/account_page_event.dart';
 export 'models/analytics/login_tap_event.dart';
 export 'models/exceptions/network_exception.dart';
+export 'models/user_profile.dart';

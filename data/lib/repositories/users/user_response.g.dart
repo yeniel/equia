@@ -7,14 +7,11 @@ part of 'user_response.dart';
 // **************************************************************************
 
 UserResponse _$UserResponseFromJson(Map<String, dynamic> json) => UserResponse(
-      uid: json['uid'] as String,
-      displayName: json['displayName'] as String?,
-      email: json['email'] as String?,
+      profile:
+          UserProfileResponse.fromJson(json['profile'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$UserResponseToJson(UserResponse instance) =>
     <String, dynamic>{
-      'uid': instance.uid,
-      'displayName': instance.displayName,
-      'email': instance.email,
+      'profile': instance.profile,
     };

@@ -8,3 +8,4 @@ export 'api_client/api_client.dart';
 export 'api_client/firebase_api_client.dart';
 export 'repositories/users/users_repository.dart';
 export 'repositories/users/user_response.dart';
+export 'repositories/users/user_profile_response.dart';

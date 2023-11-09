@@ -9,7 +9,7 @@ class UserRepository {
 
 
   Stream<UserResponse> getUser() {
-    String? uid = authService.currentUser?.id;
+    String? uid = authService.currentUser?.uid;
 
     if (uid == null) {
       throw NetworkException();
@@ -18,13 +18,18 @@ class UserRepository {
     return client.getStream(path: 'users/$uid').map((data) => UserResponse.fromJson(data));
   }
 
-  Future<void> updateUser({required UserModel userModel}) {
-    String? uid = authService.currentUser?.id;
+  Future<void> updateUserProfile({required UserProfile userProfile}) async {
+    String? uid = authService.currentUser?.uid;
 
     if (uid == null) {
       throw NetworkException();
     }
 
-    return client.post(path: 'users/$uid', data: UserResponse.fromUserModel(userModel).toJson());
+    await client.post(
+        path: 'users/$uid',
+        data: {
+          'profile': UserProfileResponse.fromUserProfile(userProfile).toJson(),
+        },
+    );
   }
 }

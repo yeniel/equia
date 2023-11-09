@@ -1,14 +1,15 @@
+import 'package:domain/domain.dart';
 import 'package:equatable/equatable.dart';
 
 class UserModel extends Equatable {
-  const UserModel({required this.id, this.displayName, this.email});
+  const UserModel({required this.profile});
 
-  final String id;
-  final String? displayName;
-  final String? email;
+  final UserProfile profile;
 
-  static const empty = UserModel(id: "");
+  String get uid => profile.uid;
+
+  static const empty = UserModel(profile: UserProfile.empty);
 
   @override
-  List<Object> get props => [id];
+  List<Object> get props => [profile];
 }
