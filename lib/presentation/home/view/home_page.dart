@@ -93,6 +93,15 @@ class _HomeViewState extends State<HomeView> {
     ];
 
     return Scaffold(
+      floatingActionButton: FloatingActionButton.small(
+        shape: const CircleBorder(),
+        onPressed: () {
+          setState(() {
+
+          });
+        },
+        child: const Icon(Icons.add),
+      ),
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) {
           setState(() {
