@@ -41,8 +41,10 @@ void main() async {
       );
       FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
 
+      var apiClient = FirebaseApiClient();
       var authService = AuthService();
       var analyticsManager = AmplitudeManager();
+      var userRepository = UserRepository(client: apiClient, authService: authService);
 
       await analyticsManager.init();
 
@@ -50,7 +52,7 @@ void main() async {
         MultiRepositoryProvider(
           providers: [
             RepositoryProvider(create: (context) => authService),
-            // RepositoryProvider(create: (context) => repository),
+            RepositoryProvider(create: (context) => userRepository),
             // ignore: unnecessary_cast
             RepositoryProvider(create: (context) => analyticsManager as AnalyticsManager),
           ],

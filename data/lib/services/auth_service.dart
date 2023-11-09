@@ -15,7 +15,7 @@ class AuthService {
   UserModel? get currentUser {
     User? firebaseUser = _firebaseAuth.currentUser;
 
-    return UserModel(id: firebaseUser?.uid ?? "", name: firebaseUser?.displayName, email: firebaseUser?.email);
+    return UserModel(id: firebaseUser?.uid ?? "", displayName: firebaseUser?.displayName, email: firebaseUser?.email);
   }
 
   Future<LoginResult?> login(LoginProvider? loginProvider) async {

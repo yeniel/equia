@@ -18,6 +18,7 @@ class App extends StatelessWidget {
     return BlocProvider(
       create: (_) => AuthenticationBloc(
         authService: context.read<AuthService>(),
+        userRepository: context.read<UserRepository>(),
       ),
       child: const AppView(),
     );

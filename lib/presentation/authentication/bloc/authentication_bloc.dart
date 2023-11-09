@@ -11,7 +11,9 @@ part 'authentication_state.dart';
 class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> {
   AuthenticationBloc({
     required AuthService authService,
+    required UserRepository userRepository,
   })  : _authService = authService,
+        _userRepository = userRepository,
         super(const AuthenticationState.unknown()) {
     on<AuthenticationStatusChanged>(_onAuthenticationStatusChanged);
     on<AuthenticationLogoutRequested>(_onAuthenticationLogoutRequested);
@@ -22,6 +24,7 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
   }
 
   final AuthService _authService;
+  final UserRepository _userRepository;
   late StreamSubscription<AuthenticationStatus> _authenticationStatusSubscription;
 
   @override
@@ -38,10 +41,11 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
       case AuthenticationStatus.unauthenticated:
         return emit(const AuthenticationState.unauthenticated());
       case AuthenticationStatus.authenticated:
-        final user = _authService.currentUser;
+        final currentUser = _authService.currentUser;
 
-        if (user != null) {
-          return emit(AuthenticationState.authenticated(user));
+        if (currentUser != null) {
+          _userRepository.updateUser(userModel: currentUser);
+          return emit(AuthenticationState.authenticated(currentUser));
         } else {
           return emit(const AuthenticationState.unauthenticated());
         }

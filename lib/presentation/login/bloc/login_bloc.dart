@@ -24,11 +24,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     LoginSubmitted event,
     Emitter<LoginState> emit,
   ) async {
-    // TODO: STATUS
-    // emit(state.copyWith(status: loginStatus));
-    _authService.login(LoginProvider.google);
-    // emit(state.copyWith(status: loginStatus));
+    LoginResult? loginResult = await _authService.login(LoginProvider.google);
 
-    _analyticsManager.logEvent(LoginTapEvent());
+    if (loginResult == LoginResult.ok) {
+      _analyticsManager.logEvent(LoginTapEvent());
+    } else {
+      throw NetworkException();
+    }
   }
 }
