@@ -6,6 +6,9 @@
   "loading_indicator": "Por favor espere",
   "version": "Versión",
   "logged_in": "Sesión iniciada con ",
-  "config": "Configuración",
-  "account": "Cuenta"
+  "account": "Cuenta",
+  "agenda": "Agenda",
+  "planner": "Planificador",
+  "time_bank": "Banco de tiempo",
+  "config": "Configuración"
 }

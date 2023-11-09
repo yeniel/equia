@@ -5,6 +5,7 @@ import 'package:equia/presentation/home/bloc/home_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -33,12 +34,13 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  int currentPageIndex = 0;
   late TutorialCoachMark tutorialCoachMark;
 
   GlobalKey keyAgendaTab = GlobalKey();
   GlobalKey keyPlannerTab = GlobalKey();
   GlobalKey keyTimeBankTab = GlobalKey();
-  GlobalKey keyAccountTab = GlobalKey();
+  GlobalKey keyConfigTab = GlobalKey();
 
   @override
   void initState() {
@@ -54,46 +56,49 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    final selectedTab = context.select((HomeBloc bloc) => bloc.state.tab);
+    var S = AppLocalizations.of(context)!;
 
     return Scaffold(
-      body: IndexedStack(
-        index: selectedTab.index,
-        // TODO: children: const [AgendaPage(), PlannerPage(), TimeBankPage()],
-        children: const [ConfigPage(), ConfigPage(), ConfigPage(), ConfigPage()],
+      bottomNavigationBar: NavigationBar(
+        onDestinationSelected: (int index) {
+          setState(() {
+            currentPageIndex = index;
+          });
+        },
+        selectedIndex: currentPageIndex,
+        destinations: <Widget>[
+          NavigationDestination(
+            key: keyAgendaTab,
+            selectedIcon: const Icon(Icons.view_agenda),
+            icon: const Icon(Icons.view_agenda_outlined),
+            label: S.agenda,
+          ),
+          NavigationDestination(
+            key: keyPlannerTab,
+            selectedIcon: const Icon(Icons.compare),
+            icon: const Icon(Icons.compare_outlined),
+            label: S.planner,
+          ),
+          NavigationDestination(
+            key: keyTimeBankTab,
+            selectedIcon: const Icon(Icons.more_time),
+            icon: const Icon(Icons.more_time_outlined),
+            label: S.time_bank
+          ),
+          NavigationDestination(
+            key: keyConfigTab,
+            selectedIcon: const Icon(Icons.manage_accounts),
+            icon: const Icon(Icons.manage_accounts_outlined),
+            label: S.account
+          ),
+        ],
       ),
-      bottomNavigationBar: BottomAppBar(
-        shape: const CircularNotchedRectangle(),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            _HomeTabButton(
-              key: keyAgendaTab,
-              groupValue: selectedTab,
-              value: HomeTab.agenda,
-              icon: const Icon(Icons.view_agenda_rounded),
-            ),
-            _HomeTabButton(
-              key: keyPlannerTab,
-              groupValue: selectedTab,
-              value: HomeTab.planner,
-              icon: const Icon(Icons.compare_rounded),
-            ),
-            _HomeTabButton(
-              key: keyTimeBankTab,
-              groupValue: selectedTab,
-              value: HomeTab.timeBank,
-              icon: const Icon(Icons.more_time_rounded),
-            ),
-            _HomeTabButton(
-              key: keyAccountTab,
-              groupValue: selectedTab,
-              value: HomeTab.account,
-              icon: const Icon(Icons.manage_accounts_rounded),
-            ),
-          ],
-        ),
-      ),
+      body: <Widget>[
+        Container(),
+        Container(),
+        Container(),
+        const ConfigPage(),
+      ][currentPageIndex],
     );
   }
 
@@ -198,7 +203,7 @@ class _HomeViewState extends State<HomeView> {
     targets.add(
       TargetFocus(
         identify: 'keyAccountTab',
-        keyTarget: keyAccountTab,
+        keyTarget: keyConfigTab,
         alignSkip: Alignment.bottomRight,
         enableOverlayTab: true,
         enableTargetTab: true,
@@ -223,28 +228,5 @@ class _HomeViewState extends State<HomeView> {
     );
 
     return targets;
-  }
-}
-
-class _HomeTabButton extends StatelessWidget {
-  const _HomeTabButton({
-    Key? key,
-    required this.groupValue,
-    required this.value,
-    required this.icon,
-  }) : super(key: key);
-
-  final HomeTab groupValue;
-  final HomeTab value;
-  final Widget icon;
-
-  @override
-  Widget build(BuildContext context) {
-    return IconButton(
-      onPressed: () => context.read<HomeBloc>().add(HomeSetTabEvent(value)),
-      iconSize: 32,
-      color: groupValue != value ? null : Theme.of(context).colorScheme.secondary,
-      icon: icon,
-    );
   }
 }
