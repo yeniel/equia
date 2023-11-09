@@ -7,6 +7,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../home.dart';
+
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -37,10 +39,36 @@ class _HomeViewState extends State<HomeView> {
   int currentPageIndex = 0;
   late TutorialCoachMark tutorialCoachMark;
 
-  GlobalKey keyAgendaTab = GlobalKey();
-  GlobalKey keyPlannerTab = GlobalKey();
-  GlobalKey keyTimeBankTab = GlobalKey();
-  GlobalKey keyConfigTab = GlobalKey();
+  static List<Destination> allDestinations = <Destination>[
+    Destination(
+      key: GlobalKey(),
+      index: 0,
+      icon: Icons.view_agenda,
+      selectedIcon: Icons.view_agenda_outlined,
+      route: () => MaterialPageRoute(builder: (_) => Container()),
+    ),
+    Destination(
+      key: GlobalKey(),
+      index: 1,
+      icon: Icons.compare,
+      selectedIcon: Icons.compare_outlined,
+      route: () => MaterialPageRoute(builder: (_) => Container()),
+    ),
+    Destination(
+      key: GlobalKey(),
+      index: 2,
+      icon: Icons.more_time,
+      selectedIcon: Icons.more_time_outlined,
+      route: () => MaterialPageRoute(builder: (_) => Container()),
+    ),
+    Destination(
+      key: GlobalKey(),
+      index: 3,
+      icon: Icons.manage_accounts,
+      selectedIcon: Icons.manage_accounts_outlined,
+      route: () => ConfigPage.route(),
+    ),
+  ];
 
   @override
   void initState() {
@@ -57,6 +85,12 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     var S = AppLocalizations.of(context)!;
+    var destinationLabels = [
+      S.agenda,
+      S.planner,
+      S.time_bank,
+      S.account,
+    ];
 
     return Scaffold(
       bottomNavigationBar: NavigationBar(
@@ -66,39 +100,17 @@ class _HomeViewState extends State<HomeView> {
           });
         },
         selectedIndex: currentPageIndex,
-        destinations: <Widget>[
-          NavigationDestination(
-            key: keyAgendaTab,
-            selectedIcon: const Icon(Icons.view_agenda),
-            icon: const Icon(Icons.view_agenda_outlined),
-            label: S.agenda,
-          ),
-          NavigationDestination(
-            key: keyPlannerTab,
-            selectedIcon: const Icon(Icons.compare),
-            icon: const Icon(Icons.compare_outlined),
-            label: S.planner,
-          ),
-          NavigationDestination(
-            key: keyTimeBankTab,
-            selectedIcon: const Icon(Icons.more_time),
-            icon: const Icon(Icons.more_time_outlined),
-            label: S.time_bank
-          ),
-          NavigationDestination(
-            key: keyConfigTab,
-            selectedIcon: const Icon(Icons.manage_accounts),
-            icon: const Icon(Icons.manage_accounts_outlined),
-            label: S.account
-          ),
-        ],
+        destinations: allDestinations.map((destination) {
+          return NavigationDestination(
+            selectedIcon: Icon(destination.selectedIcon),
+            icon: Icon(destination.icon),
+            label: destinationLabels[destination.index],
+          );
+        }).toList(),
       ),
-      body: <Widget>[
-        Container(),
-        Container(),
-        Container(),
-        const ConfigPage(),
-      ][currentPageIndex],
+      body: allDestinations.map((Destination destination) {
+        return DestinationView(destination: destination);
+      }).toList()[currentPageIndex],
     );
   }
 
@@ -117,116 +129,58 @@ class _HomeViewState extends State<HomeView> {
   }
 
   List<TargetFocus> _createTargets() {
-    var targets = <TargetFocus>[];
-
-    targets.add(
-      TargetFocus(
+    return <TargetFocus>[
+      _createTarget(
         identify: 'keyAgendaTab',
-        keyTarget: keyAgendaTab,
-        alignSkip: Alignment.bottomLeft,
-        enableOverlayTab: true,
-        enableTargetTab: true,
-        contents: [
-          TargetContent(
-            align: ContentAlign.top,
-            builder: (context, controller) {
-              return const Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    'En la pestaña inicial Agenda, verás la lista de tus próximas tareas',
-                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
-                  ),
-                ],
-              );
-            },
-          ),
-        ],
+        keyTarget: allDestinations[0].key,
+        text: 'En la pestaña inicial Agenda, verás la lista de tus próximas tareas',
       ),
-    );
-
-    targets.add(
-      TargetFocus(
+      _createTarget(
         identify: 'keyPlannerTab',
-        keyTarget: keyPlannerTab,
-        alignSkip: Alignment.bottomLeft,
-        enableOverlayTab: true,
-        enableTargetTab: true,
-        contents: [
-          TargetContent(
-            align: ContentAlign.top,
-            builder: (context, controller) {
-              return const Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    'Aquí podrás ver la planificación de tareas y reparto equitativo del tiempo',
-                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
-                  ),
-                ],
-              );
-            },
-          ),
-        ],
+        keyTarget: allDestinations[1].key,
+        text: 'Aquí podrás ver la planificación de tareas y reparto equitativo del tiempo',
       ),
-    );
-
-    targets.add(
-      TargetFocus(
+      _createTarget(
         identify: 'keyTimeBankTab',
-        keyTarget: keyTimeBankTab,
-        alignSkip: Alignment.bottomRight,
-        enableOverlayTab: true,
-        enableTargetTab: true,
-        contents: [
-          TargetContent(
-            align: ContentAlign.top,
-            builder: (context, controller) {
-              return const Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    'Aquí podrás crear tareas puntuales que se incluirán en el banco de tiempo',
-                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
-                  ),
-                ],
-              );
-            },
-          ),
-        ],
+        keyTarget: allDestinations[2].key,
+        text: 'Aquí podrás crear tareas puntuales que se incluirán en el banco de tiempo',
       ),
-    );
-
-    targets.add(
-      TargetFocus(
+      _createTarget(
         identify: 'keyAccountTab',
-        keyTarget: keyConfigTab,
-        alignSkip: Alignment.bottomRight,
-        enableOverlayTab: true,
-        enableTargetTab: true,
-        contents: [
-          TargetContent(
-            align: ContentAlign.top,
-            builder: (context, controller) {
-              return const Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    'Aquí podrás ver toda la información de tu cuenta',
-                    style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
-                  ),
-                ],
-              );
-            },
-          ),
-        ],
+        keyTarget: allDestinations[3].key,
+        text: 'Aquí podrás ver toda la información de tu cuenta',
       ),
-    );
+    ];
+  }
 
-    return targets;
+  TargetFocus _createTarget({
+    required String identify,
+    required GlobalKey keyTarget,
+    required String text,
+  }) {
+    return TargetFocus(
+      identify: identify,
+      //keyTarget: keyTarget,
+      alignSkip: Alignment.bottomLeft,
+      enableOverlayTab: true,
+      enableTargetTab: true,
+      contents: [
+        TargetContent(
+          align: ContentAlign.top,
+          builder: (context, controller) {
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text(
+                  text,
+                  style: const TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
+                ),
+              ],
+            );
+          },
+        ),
+      ],
+    );
   }
 }
