@@ -37,6 +37,7 @@ class ConfigView extends StatelessWidget {
     var S = AppLocalizations.of(context)!;
 
     return BaseView(
+      title: S.config,
       child: Expanded(
         child: BlocBuilder<ConfigBloc, ConfigState>(
           builder: (context, state) {

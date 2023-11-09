@@ -37,6 +37,7 @@ class AccountView extends StatelessWidget {
     var S = AppLocalizations.of(context)!;
 
     return BaseView(
+      title: S.account,
       child: Expanded(
         child: BlocBuilder<AccountBloc, AccountState>(
           builder: (context, state) {
