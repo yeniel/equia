@@ -5,5 +5,7 @@ class AnalyticsEventName {
   static const plannerPage = "PlannerPage";
   static const timeBankPage = "TimeBank";
   static const accountPage = "AccountPage";
-  static const loginTapEvent = "LoginTapEvent";
+  static const loginTap = "LoginTapEvent";
+  static const login = "LoginEvent";
+  static const logout = "LogoutEvent";
 }

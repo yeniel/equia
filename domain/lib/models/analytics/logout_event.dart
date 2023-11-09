@@ -1,8 +1,8 @@
 import 'package:domain/domain.dart';
 
-class LoginTapEvent implements AnalyticsEvent {
+class LogoutEvent implements AnalyticsEvent {
   @override
-  String get name => AnalyticsEventName.loginTap;
+  String get name => AnalyticsEventName.logout;
 
   @override
   Map<String, dynamic> get properties => {};
