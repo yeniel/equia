@@ -15,7 +15,7 @@ class SplashPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset('assets/app_icon.png'),
+            Image.asset('assets/equia_logo_1024.png'),
             const LoadingIndicator(),
           ],
         ),
