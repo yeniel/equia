@@ -19,3 +19,5 @@ export 'models/exceptions/network_exception.dart';
 export 'models/user_profile.dart';
 export 'models/analytics/login_analytics_event.dart';
 export 'models/analytics/logout_event.dart';
+export 'models/group.dart';
+export 'models/group_invitation.dart';

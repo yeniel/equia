@@ -16,10 +16,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         super(HomeInitial()) {
     on<HomeSetTabEvent>(_onHomeSetTab);
 
-    var user = _authService.currentUser;
-
-    if (user != null) {
-      _analyticsManager.setUserId(user.uid.toString());
+    if (_authService.isLoggedIn) {
+      _analyticsManager.setUserId(_authService.currentUser.uid.toString());
     }
   }
 

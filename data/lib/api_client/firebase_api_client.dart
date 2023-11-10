@@ -38,4 +38,20 @@ class FirebaseApiClient implements ApiClient {
       return document.data() as Map<String, dynamic>;
     });
   }
+
+  @override
+  Stream<List<Map<String, dynamic>>> getStreamList({required String path}) {
+    final collectionRef = client.collection(path);
+
+    return collectionRef.snapshots().map((QuerySnapshot querySnapshot) {
+      return querySnapshot.docs.map((DocumentSnapshot document) {
+        return document.data() as Map<String, dynamic>;
+      }).toList();
+    });
+  }
+
+  @override
+  String generateId({required String path}) {
+    return client.collection(path).doc().id;
+  }
 }

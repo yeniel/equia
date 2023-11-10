@@ -16,13 +16,19 @@ class UserResponse {
 
   Map<String, dynamic> toJson() => _$UserResponseToJson(this);
 
-  factory UserResponse.fromUserModel(UserModel userModel) {
+  factory UserResponse.fromModel(UserModel userModel) {
     return UserResponse(
       profile: UserProfileResponse(
         uid: userModel.profile.uid,
         displayName: userModel.profile.displayName,
         email: userModel.profile.email,
       )
+    );
+  }
+
+  UserModel toModel() {
+    return UserModel(
+      profile: profile.toModel(),
     );
   }
 }

@@ -7,29 +7,45 @@ class UserRepository {
   final ApiClient client;
   final AuthService authService;
 
+  static const basePath = 'users';
 
-  Stream<UserResponse> getUser() {
-    String? uid = authService.currentUser?.uid;
+  Stream<UserModel> getUser() {
+    if (authService.isLoggedIn) {
+      String uid = authService.currentUser.uid;
 
-    if (uid == null) {
+      return client.getStream(path: '$basePath/$uid').map((data) => UserResponse.fromJson(data).toModel());
+    } else {
       throw NetworkException();
     }
-
-    return client.getStream(path: 'users/$uid').map((data) => UserResponse.fromJson(data));
   }
 
   Future<void> updateUserProfile({required UserProfile userProfile}) async {
-    String? uid = authService.currentUser?.uid;
+    if (authService.isLoggedIn) {
+      String uid = authService.currentUser.uid;
 
-    if (uid == null) {
+      await client.post(
+        path: '$basePath/$uid',
+        data: {
+          'profile': UserProfileResponse.fromModel(userProfile).toJson(),
+        },
+      );
+    } else {
       throw NetworkException();
     }
+  }
 
-    await client.post(
-        path: 'users/$uid',
+  Future<void> joinGroup({required String groupId}) async {
+    if (authService.isLoggedIn) {
+      String uid = authService.currentUser.uid;
+
+      await client.post(
+        path: '$basePath/$uid',
         data: {
-          'profile': UserProfileResponse.fromUserProfile(userProfile).toJson(),
+          'group': groupId,
         },
-    );
+      );
+    } else {
+      throw NetworkException();
+    }
   }
 }

@@ -12,16 +12,24 @@ class AuthService {
 
   AuthService();
 
-  UserModel? get currentUser {
+  bool get isLoggedIn {
+    return _firebaseAuth.currentUser != null;
+  }
+
+  UserModel get currentUser {
     User? firebaseUser = _firebaseAuth.currentUser;
 
-    return UserModel(
-      profile: UserProfile(
-        uid: firebaseUser?.uid ?? "",
-        displayName: firebaseUser?.displayName,
-        email: firebaseUser?.email
-      )
-    );
+    if (firebaseUser != null) {
+      return UserModel(
+        profile: UserProfile(
+          uid: firebaseUser.uid,
+          displayName: firebaseUser.displayName ?? "",
+          email: firebaseUser.email ?? ""
+        )
+      );
+    }
+
+    return UserModel.empty;
   }
 
   Future<LoginResult?> login(LoginProvider? loginProvider) async {
