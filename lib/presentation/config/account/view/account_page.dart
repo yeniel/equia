@@ -1,6 +1,6 @@
 import 'package:data/data.dart';
 import 'package:domain/domain.dart';
-import 'package:equia/presentation/config/account/bloc/account_bloc.dart';
+import 'package:equia/presentation/config/config.dart';
 import 'package:equia/presentation/widgets/base_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

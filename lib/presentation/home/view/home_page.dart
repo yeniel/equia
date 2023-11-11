@@ -1,13 +1,11 @@
 import 'package:data/data.dart';
 import 'package:domain/domain.dart';
-import 'package:equia/presentation/config/view/config_page.dart';
-import 'package:equia/presentation/home/bloc/home_bloc.dart';
+import 'package:equia/presentation/config/config.dart';
+import 'package:equia/presentation/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
-import '../home.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
