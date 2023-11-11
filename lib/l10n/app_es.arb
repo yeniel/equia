@@ -10,5 +10,16 @@
   "agenda": "Agenda",
   "planner": "Planificador",
   "time_bank": "Banco de tiempo",
-  "config": "Configuración"
+  "config": "Configuración",
+  "onboarding_group_title": "Hola {name}!",
+  "@onboarding_group_title": {
+    "placeholders": {
+      "name": {
+        "content": "{name}",
+        "example": "Yeniel"
+      }
+    }
+  },
+  "onboarding_group_message": "Para empezar a usar Equia, primero tendrás que crear un grupo",
+  "onboarding_group_create": "Crear grupo"
 }

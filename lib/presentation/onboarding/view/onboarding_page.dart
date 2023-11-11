@@ -14,35 +14,40 @@ class OnboardingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var S = AppLocalizations.of(context)!;
+    return BlocProvider(
+      create: (context) {
+        return OnboardingBloc(
+          userRepository: RepositoryProvider.of<UserRepository>(context),
+          groupsRepository: RepositoryProvider.of<GroupsRepository>(context),
+          groupInvitationsRepository: RepositoryProvider.of<GroupInvitationsRepository>(context),
+          analyticsManager: context.read<AnalyticsManager>(),
+        );
+      },
+      child: const OnboardingView(),
+    );
+  }
+}
+
+class OnboardingView extends StatelessWidget {
+  const OnboardingView({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     final PageController controller = PageController();
 
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16),
-        child: BlocProvider(
-          create: (context) {
-            return OnboardingBloc(
-              userRepository: RepositoryProvider.of<UserRepository>(context),
-              groupsRepository: RepositoryProvider.of<GroupsRepository>(context),
-              groupInvitationsRepository: RepositoryProvider.of<GroupInvitationsRepository>(context),
-              analyticsManager: context.read<AnalyticsManager>(),
-            );
-          },
-          child: PageView(
-            controller: controller,
-            children: const <Widget>[
-              Center(
-                child: Text('First Page'),
-              ),
-              Center(
-                child: Text('Second Page'),
-              ),
-              Center(
-                child: Text('Third Page'),
-              ),
-            ],
-          ),
+        child: PageView(
+          controller: controller,
+          children: const <Widget>[
+            Center(
+              child: OnboardingGroupPage(),
+            ),
+            Center(
+              child: Text('Second Page'),
+            ),
+          ],
         ),
       ),
     );

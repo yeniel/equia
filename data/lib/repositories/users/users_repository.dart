@@ -13,6 +13,10 @@ class UserRepository {
     return (await getUser().last).profile.uid;
   }
 
+  Future<UserModel> get currentUser async {
+    return getUser().last;
+  }
+
   Stream<UserModel> getUser() {
     String uid = authService.currentProfile.uid;
 
