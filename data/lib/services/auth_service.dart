@@ -16,20 +16,18 @@ class AuthService {
     return _firebaseAuth.currentUser != null;
   }
 
-  UserModel get currentUser {
+  UserProfile get currentProfile {
     User? firebaseUser = _firebaseAuth.currentUser;
 
     if (firebaseUser != null) {
-      return UserModel(
-        profile: UserProfile(
-          uid: firebaseUser.uid,
-          displayName: firebaseUser.displayName ?? "",
-          email: firebaseUser.email ?? ""
-        )
+      return UserProfile(
+        uid: firebaseUser.uid,
+        displayName: firebaseUser.displayName ?? "",
+        email: firebaseUser.email ?? ""
       );
     }
 
-    return UserModel.empty;
+    return UserProfile.empty;
   }
 
   Future<LoginResult?> login(LoginProvider? loginProvider) async {
@@ -45,14 +43,14 @@ class AuthService {
     return _firebaseAuth.signOut();
   }
 
-  Stream<AuthenticationStatus> get status {
+  Stream<AppAuthStatus> get status {
     return FirebaseAuth.instance
       .userChanges()
       .map((firebaseUser) {
         if (firebaseUser == null) {
-          return AuthenticationStatus.unauthenticated;
+          return AppAuthStatus.unauthenticated;
         } else {
-          return AuthenticationStatus.authenticated;
+          return AppAuthStatus.authenticated;
         }
       });
   }

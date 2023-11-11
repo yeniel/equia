@@ -1,0 +1,1 @@
+enum InitialRoute { onboarding, home }

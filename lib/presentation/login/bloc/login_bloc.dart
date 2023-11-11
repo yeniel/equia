@@ -29,7 +29,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     LoginResult? loginResult = await _authService.login(LoginProvider.google);
 
     if (loginResult == LoginResult.ok) {
-      _analyticsManager.logEvent(LoginAnalyticsEvent(userProfile: _authService.currentUser.profile));
+      _analyticsManager.logEvent(LoginAnalyticsEvent(userProfile: _authService.currentProfile));
     } else {
       throw NetworkException();
     }

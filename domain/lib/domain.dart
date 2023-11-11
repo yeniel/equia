@@ -21,3 +21,5 @@ export 'models/analytics/login_analytics_event.dart';
 export 'models/analytics/logout_event.dart';
 export 'models/group.dart';
 export 'models/group_invitation.dart';
+export 'models/initial_route.dart';
+export 'models/analytics/config_page_event.dart';

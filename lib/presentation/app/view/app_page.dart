@@ -5,10 +5,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-import 'presentation/authentication/authentication.dart';
-import 'presentation/home/home.dart';
-import 'presentation/login/login.dart';
-import 'presentation/splash/splash.dart';
+import '../../home/home.dart';
+import '../../login/login.dart';
+import '../../onboarding/onboarding.dart';
+import '../../splash/splash.dart';
+import '../app.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
@@ -16,9 +17,10 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => AuthenticationBloc(
+      create: (_) => AppBloc(
         authService: context.read<AuthService>(),
         userRepository: context.read<UserRepository>(),
+        analyticsManager: context.read<AnalyticsManager>(),
       ),
       child: const AppView(),
     );
@@ -73,24 +75,29 @@ class AppViewState extends State<AppView> {
         Locale('es', ''),
       ],
       builder: (context, child) {
-        return BlocListener<AuthenticationBloc, AuthenticationState>(
+        return BlocListener<AppBloc, AppState>(
           listener: (context, state) {
-            switch (state.status) {
-              case AuthenticationStatus.authenticated:
-                _navigator.pushAndRemoveUntil<void>(
-                  HomePage.route(),
-                      (route) => false,
-                );
+            Route route;
+
+            switch (state.authStatus) {
+              case AppAuthStatus.authenticated:
+                switch (state.initialRoute) {
+                  case InitialRoute.home:
+                    route = HomePage.route();
+                    break;
+                  case InitialRoute.onboarding:
+                    route = OnboardingPage.route();
+                    break;
+                }
+                route = OnboardingPage.route();
                 break;
-              case AuthenticationStatus.unauthenticated:
-                _navigator.pushAndRemoveUntil<void>(
-                  LoginPage.route(),
-                      (route) => false,
-                );
-                break;
-              default:
+              case AppAuthStatus.unauthenticated:
+              case AppAuthStatus.unknown:
+                route = LoginPage.route();
                 break;
             }
+
+            _navigator.pushAndRemoveUntil<void>(route, (route) => false);
           },
           child: child,
         );

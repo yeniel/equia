@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:data/data.dart';
 import 'package:domain/domain.dart';
-import 'package:equia/app.dart';
+import 'package:equia/presentation/app/view/app_page.dart';
 import 'package:equia/firebase_options.dart';
 import 'package:equia/presentation/analytics/amplitude_manager.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -45,6 +45,8 @@ void main() async {
       var authService = AuthService();
       var analyticsManager = AmplitudeManager();
       var userRepository = UserRepository(client: apiClient, authService: authService);
+      var groupInvitationsRepository = GroupInvitationsRepository(client: apiClient, userRepository: userRepository);
+      var groupsRepository = GroupsRepository(client: apiClient);
 
       await analyticsManager.init();
 
@@ -53,6 +55,8 @@ void main() async {
           providers: [
             RepositoryProvider(create: (context) => authService),
             RepositoryProvider(create: (context) => userRepository),
+            RepositoryProvider(create: (context) => groupsRepository),
+            RepositoryProvider(create: (context) => groupInvitationsRepository),
             // ignore: unnecessary_cast
             RepositoryProvider(create: (context) => analyticsManager as AnalyticsManager),
           ],

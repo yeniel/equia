@@ -10,7 +10,6 @@ part 'config_state.dart';
 
 class ConfigBloc extends Bloc<ConfigEvent, ConfigState> {
   ConfigBloc({
-    required AuthService authService,
     required UserRepository userRepository,
     required AnalyticsManager analyticsManager,
   })  : _analyticsManager = analyticsManager,
@@ -25,5 +24,6 @@ class ConfigBloc extends Bloc<ConfigEvent, ConfigState> {
     var version = '${packageInfo.version}+${packageInfo.buildNumber}';
 
     emit(state.copyWith(version: version));
+    _analyticsManager.logEvent(ConfigPageEvent());
   }
 }

@@ -1,4 +1,3 @@
-import 'package:data/data.dart';
 import 'package:domain/domain.dart';
 import 'package:equia/presentation/config/config.dart';
 import 'package:equia/presentation/home/home.dart';
@@ -17,10 +16,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => HomeBloc(
-        authService: context.read<AuthService>(),
-        analyticsManager: context.read<AnalyticsManager>(),
-      ),
+      create: (_) => HomeBloc(),
       child: const HomeView(),
     );
   }

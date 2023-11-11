@@ -18,7 +18,6 @@ class ConfigPage extends StatelessWidget {
     return BlocProvider(
       create: (_) =>
       ConfigBloc(
-        authService: context.read<AuthService>(),
         userRepository: context.read<UserRepository>(),
         analyticsManager: context.read<AnalyticsManager>(),
       )
