@@ -3,7 +3,6 @@ import 'package:domain/domain.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../onboarding_group.dart';
 
@@ -17,14 +16,12 @@ class OnboardingGroupPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) {
-        return OnboardingGroupBloc(
-          userRepository: RepositoryProvider.of<UserRepository>(context),
-          groupsRepository: RepositoryProvider.of<GroupsRepository>(context),
-          groupInvitationsRepository: RepositoryProvider.of<GroupInvitationsRepository>(context),
-          analyticsManager: context.read<AnalyticsManager>(),
-        );
-      },
+      create: (_) => OnboardingGroupBloc(
+        userRepository: RepositoryProvider.of<UserRepository>(context),
+        groupsRepository: RepositoryProvider.of<GroupsRepository>(context),
+        groupInvitationsRepository: RepositoryProvider.of<GroupInvitationsRepository>(context),
+        analyticsManager: context.read<AnalyticsManager>(),
+      )..add(const OnboardingGroupInitEvent()),
       child: const OnboardingGroupView(),
     );
   }
@@ -50,12 +47,14 @@ class OnboardingGroupView extends StatelessWidget {
                   Text(
                     S.onboarding_group_title(state.user.profile.displayName),
                     style: textTheme.headlineMedium,
+                    textAlign: TextAlign.center,
                   ),
                   Text(
                     S.onboarding_group_message,
                     style: textTheme.bodyMedium,
+                    textAlign: TextAlign.center,
                   ),
-                  const Icon(FontAwesomeIcons.peopleGroup, size: 150),
+                  const Icon(Icons.groups, size: 150),
                   FilledButton(
                     onPressed: () => context.read<OnboardingGroupBloc>().add(const OnboardingGroupCreateEvent()),
                     child: Text(S.onboarding_group_create),

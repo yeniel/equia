@@ -20,7 +20,7 @@ class OnboardingPage extends StatelessWidget {
           groupsRepository: RepositoryProvider.of<GroupsRepository>(context),
           groupInvitationsRepository: RepositoryProvider.of<GroupInvitationsRepository>(context),
           analyticsManager: context.read<AnalyticsManager>(),
-        );
+        )..add(const OnboardingInitEvent());
       },
       child: const OnboardingView(),
     );
