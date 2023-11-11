@@ -14,20 +14,11 @@ class FirebaseApiClient implements ApiClient {
     final docRef = client.doc(path);
     const source = Source.cache;
 
-    return docRef.get(const GetOptions(source: source))
-      .then((DocumentSnapshot document) {
-        return document.data() as Map<String, dynamic>;
-      },
-      onError: (error) {
-        throw NetworkException();
-      }
-    );
-  }
-
-  @override
-  Future<void> post({required String path, required Map<String, dynamic> data, bool merge = true}) async {
-    return client.doc(path).set(data, SetOptions(merge: merge))
-        .onError((error, stackTrace) => throw NetworkException());
+    return docRef.get(const GetOptions(source: source)).then((DocumentSnapshot document) {
+      return document.data() as Map<String, dynamic>;
+    }, onError: (error) {
+      throw NetworkException();
+    });
   }
 
   @override
@@ -48,6 +39,34 @@ class FirebaseApiClient implements ApiClient {
         return document.data() as Map<String, dynamic>;
       }).toList();
     });
+  }
+
+  @override
+  Future<void> post({required String path, required Map<String, dynamic> data, bool merge = true}) async {
+    return client
+        .doc(path)
+        .set(data, SetOptions(merge: merge))
+        .onError((error, stackTrace) => throw NetworkException());
+  }
+
+  @override
+  Future<void> put({required String path, required Map<String, dynamic> data, bool merge = true}) async {
+    return client
+        .doc(path)
+        .set(data, SetOptions(merge: merge))
+        .onError((error, stackTrace) => throw NetworkException());
+  }
+
+  @override
+  Future<void> patch({required String path, required Map<String, dynamic> data}) async {
+    return client.doc(path).update(data).onError((error, stackTrace) => throw NetworkException());
+  }
+
+  @override
+  Future<void> patchArray({required String path, required String fieldName, required List<dynamic> values}) async {
+    return client.doc(path).update({
+      fieldName: FieldValue.arrayUnion(values)
+    }).onError((error, stackTrace) => throw NetworkException());
   }
 
   @override

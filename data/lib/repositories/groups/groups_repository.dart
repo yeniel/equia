@@ -18,4 +18,12 @@ class GroupsRepository {
   Stream<Group> getGroup({required String groupId}) {
     return client.getStream(path: '$basePath/$groupId').map((data) => GroupResponse.fromJson(data).toModel());
   }
+
+  Future<void> addMember({required String groupId, required String memberId}) async {
+    await client.patchArray(
+      path: '$basePath/$groupId',
+      fieldName: 'members',
+      values: [memberId],
+    );
+  }
 }

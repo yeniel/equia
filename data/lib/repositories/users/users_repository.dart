@@ -37,7 +37,7 @@ class UserRepository {
   Future<void> joinGroup({required String groupId}) async {
     String uid = authService.currentProfile.uid;
 
-    await client.post(
+    await client.patch(
       path: '$basePath/$uid',
       data: {
         'group': groupId,

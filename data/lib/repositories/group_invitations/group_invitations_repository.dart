@@ -27,15 +27,4 @@ class GroupInvitationsRepository {
       data: GroupInvitationResponse.fromModel(groupInvitation).toJson(),
     );
   }
-
-  Future<void> joinGroup({required String groupId}) async {
-    String uid = await userRepository.uid;
-
-    await client.post(
-      path: 'users/$uid',
-      data: {
-        'group': groupId,
-      },
-    );
-  }
 }
