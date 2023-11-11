@@ -15,10 +15,8 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var S = AppLocalizations.of(context)!;
 
     return Scaffold(
-      appBar: AppBar(title: Text(S.appName)),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: BlocProvider(
