@@ -6,32 +6,32 @@ part 'group_invitation_response.g.dart';
 @JsonSerializable()
 class GroupInvitationResponse {
   const GroupInvitationResponse({
-    required this.fromUser,
-    required this.toUser,
-    required this.group,
+    required this.fromUserId,
+    required this.toUserEmail,
+    required this.groupId,
   });
 
   factory GroupInvitationResponse.fromJson(Map<String, dynamic> json) => _$GroupInvitationResponseFromJson(json);
 
-  final String fromUser;
-  final String toUser;
-  final String group;
+  final String fromUserId;
+  final String toUserEmail;
+  final String groupId;
 
   Map<String, dynamic> toJson() => _$GroupInvitationResponseToJson(this);
 
   factory GroupInvitationResponse.fromModel(GroupInvitation groupInvitation) {
     return GroupInvitationResponse(
-      fromUser: groupInvitation.fromUser,
-      toUser: groupInvitation.toUser,
-      group: groupInvitation.group,
+      fromUserId: groupInvitation.fromUserId,
+      toUserEmail: groupInvitation.toUserEmail,
+      groupId: groupInvitation.groupId,
     );
   }
 
   GroupInvitation toModel() {
     return GroupInvitation(
-      fromUser: fromUser,
-      toUser: toUser,
-      group: group,
+      fromUserId: fromUserId,
+      toUserEmail: toUserEmail,
+      groupId: groupId,
     );
   }
 }

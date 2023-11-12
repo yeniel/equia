@@ -50,7 +50,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
           _analyticsManager.setUserId(currentUserProfile.uid);
 
           await emit.forEach<UserModel>(
-            _userRepository.getUser(),
+            _userRepository.getUserStream(),
             onData: (user) {
               if (user.hasGroup) {
                 return const AppState.authenticated();

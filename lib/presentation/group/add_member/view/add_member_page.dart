@@ -5,31 +5,31 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
-import '../onboarding_group_create.dart';
+import '../add_member.dart';
 
-class OnboardingGroupCreatePage extends StatelessWidget {
-  const OnboardingGroupCreatePage({super.key, required this.onCreateGroup});
+class AddMemberPage extends StatelessWidget {
+  const AddMemberPage({super.key, required this.onCreateGroup});
 
   final VoidCallback onCreateGroup;
 
   static Route route({required VoidCallback onCreateGroup}) {
-    return MaterialPageRoute(builder: (_) => OnboardingGroupCreatePage(onCreateGroup: onCreateGroup));
+    return MaterialPageRoute(builder: (_) => AddMemberPage(onCreateGroup: onCreateGroup));
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => OnboardingGroupCreateBloc(
+      create: (_) => AddMemberBloc(
         userRepository: RepositoryProvider.of<UserRepository>(context),
-        groupsRepository: RepositoryProvider.of<GroupsRepository>(context),
-      )..add(const OnboardingGroupCreateInitEvent()),
-      child: OnboardingGroupView(onCreateGroup: onCreateGroup),
+        groupInvitationsRepository: RepositoryProvider.of<GroupInvitationsRepository>(context),
+      )..add(const AddMemberInitEvent()),
+      child: AddView(onCreateGroup: onCreateGroup),
     );
   }
 }
 
-class OnboardingGroupView extends StatelessWidget {
-  const OnboardingGroupView({Key? key, required this.onCreateGroup}) : super(key: key);
+class AddView extends StatelessWidget {
+  const AddView({Key? key, required this.onCreateGroup}) : super(key: key);
 
   final VoidCallback onCreateGroup;
 
@@ -42,7 +42,7 @@ class OnboardingGroupView extends StatelessWidget {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16),
-        child: BlocBuilder<OnboardingGroupCreateBloc, OnboardingGroupCreateState>(
+        child: BlocBuilder<AddMemberBloc, AddMemberState>(
           builder: (context, state) {
             return Center(
               child: Column(
@@ -67,11 +67,11 @@ class OnboardingGroupView extends StatelessWidget {
                   ),
                   FilledButton(
                     onPressed: () {
-                      var createEvent = OnboardingCreateGroupEvent(
-                        groupName: groupNameFieldKey.currentState!.value as String,
+                      var createEvent = AddMemberAddEvent(
+                        memberEmail: groupNameFieldKey.currentState!.value as String,
                       );
 
-                      context.read<OnboardingGroupCreateBloc>().add(createEvent);
+                      context.read<AddMemberBloc>().add(createEvent);
 
                       onCreateGroup();
                     },

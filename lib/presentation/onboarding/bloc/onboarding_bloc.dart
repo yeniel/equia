@@ -20,12 +20,8 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
   final UserRepository _userRepository;
 
   Future<void> _onOnboardingInitEvent(OnboardingInitEvent event, Emitter<OnboardingState> emit) async {
-    await emit.forEach<UserModel>(
-      _userRepository.getUser(),
-      onData: (user) {
-        return state.copyWith(user: user);
-      },
-      onError: (_, __) => state,
-    );
+    var user = await _userRepository.getUser();
+
+    emit(state.copyWith(user: user));
   }
 }

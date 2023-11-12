@@ -6,7 +6,6 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'onboarding_group_info_event.dart';
-
 part 'onboarding_group_info_state.dart';
 
 class OnboardingGroupInfoBloc extends Bloc<OnboardingGroupInfoEvent, OnboardingGroupInfoState> {
@@ -26,12 +25,8 @@ class OnboardingGroupInfoBloc extends Bloc<OnboardingGroupInfoEvent, OnboardingG
     OnboardingGroupInfoInitEvent event,
     Emitter<OnboardingGroupInfoState> emit,
   ) async {
-    await emit.forEach<UserModel>(
-      _userRepository.getUser(),
-      onData: (user) {
-        return state.copyWith(user: user);
-      },
-      onError: (_, __) => state,
-    );
+    var user = await _userRepository.getUser();
+
+    emit(state.copyWith(user: user));
   }
 }

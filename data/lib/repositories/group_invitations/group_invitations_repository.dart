@@ -9,21 +9,16 @@ class GroupInvitationsRepository {
 
   static const basePath = 'group_invitations';
 
-  Stream<List<GroupInvitation>> getInvitations() {
-    return userRepository.getUser().asyncExpand((user) {
-      return client.getStreamList(path: '$basePath/${user.profile.email}').map((invitationsResponse) {
-        return invitationsResponse.map((invitationResponse) {
-          return GroupInvitationResponse.fromJson(invitationResponse).toModel();
-        }).toList();
-      });
-    });
+  Future<GroupInvitation> getInvitation() async {
+    var user = await userRepository.getUser();
+    var invitationResponse = await client.get(path: '$basePath/${user.profile.email}');
+
+    return GroupInvitationResponse.fromJson(invitationResponse).toModel();
   }
 
   Future<void> createInvitation({required GroupInvitation groupInvitation}) async {
-    String email = (await userRepository.getUser().last).profile.email;
-
     await client.put(
-      path: '$basePath/$email',
+      path: '$basePath/${groupInvitation.toUserEmail}',
       data: GroupInvitationResponse.fromModel(groupInvitation).toJson(),
     );
   }

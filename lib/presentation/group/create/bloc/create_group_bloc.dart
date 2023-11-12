@@ -5,33 +5,33 @@ import 'package:domain/domain.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-part 'onboarding_group_create_event.dart';
-part 'onboarding_group_create_state.dart';
+part 'create_group_event.dart';
+part 'create_group_state.dart';
 
-class OnboardingGroupCreateBloc extends Bloc<OnboardingGroupCreateEvent, OnboardingGroupCreateState> {
-  OnboardingGroupCreateBloc({
+class CreateGroupBloc extends Bloc<CreateGroupEvent, CreateGroupState> {
+  CreateGroupBloc({
     required UserRepository userRepository,
     required GroupsRepository groupsRepository,
   })  : _userRepository = userRepository,
         _groupsRepository = groupsRepository,
-        super(const OnboardingGroupCreateState()) {
-    on<OnboardingGroupCreateInitEvent>(_onOnboardingGroupCreateInitEvent);
-    on<OnboardingCreateGroupEvent>(_onOnboardingCreateGroupEvent);
+        super(const CreateGroupState()) {
+    on<CreateGroupInitEvent>(_onGroupCreateInitEvent);
+    on<CreateGroupCreateEvent>(_onCreateGroupCreateEvent);
   }
 
   final UserRepository _userRepository;
   final GroupsRepository _groupsRepository;
 
-  Future<void> _onOnboardingGroupCreateInitEvent(
-    OnboardingGroupCreateInitEvent event,
-    Emitter<OnboardingGroupCreateState> emit,
+  Future<void> _onGroupCreateInitEvent(
+    CreateGroupInitEvent event,
+    Emitter<CreateGroupState> emit,
   ) async {
     emit(state);
   }
 
-  Future<void> _onOnboardingCreateGroupEvent(
-    OnboardingCreateGroupEvent event,
-    Emitter<OnboardingGroupCreateState> emit,
+  Future<void> _onCreateGroupCreateEvent(
+    CreateGroupCreateEvent event,
+    Emitter<CreateGroupState> emit,
   ) async {
     var group = Group(
       id: '',

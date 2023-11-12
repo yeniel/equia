@@ -1,6 +1,6 @@
 import 'package:data/data.dart';
 import 'package:domain/domain.dart';
-import 'package:equia/presentation/onboarding/group_create/onboarding_group_create.dart';
+import 'package:equia/presentation/group/create/create_group.dart';
 import 'package:equia/presentation/onboarding/onboarding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -42,7 +42,7 @@ class OnboardingView extends StatelessWidget {
           controller: controller,
           children: <Widget>[
             OnboardingGroupInfoPage(onContinue: _onContinue),
-            OnboardingGroupCreatePage(onCreateGroup: _onCreateGroup),
+            CreateGroupPage(onCreateGroup: _onCreateGroup),
           ],
         ),
       ),
@@ -53,6 +53,5 @@ class OnboardingView extends StatelessWidget {
     controller.nextPage(duration: const Duration(milliseconds: 400), curve: Curves.easeInOut);
   }
 
-  void _onCreateGroup() {
-  }
+  void _onCreateGroup() {}
 }
