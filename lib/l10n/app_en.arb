@@ -21,5 +21,8 @@
     }
   },
   "onboarding_group_message": "To start using Equia you will first have to create a group",
-  "onboarding_group_create": "Create group"
+  "onboarding_group_create": "Create group",
+  "continue_button": "Continue",
+  "group_name": "Group name",
+  "create_group": "Create group"
 }

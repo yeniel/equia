@@ -8,11 +8,13 @@ class GroupsRepository {
 
   static const basePath = 'groups';
 
-  Future<void> createGroup({required Group group}) async {
-    await client.post(
+  Future<Group> createGroup({required Group group}) async {
+    var createdGroupJson = await client.post(
       path: basePath,
       data: GroupResponse.fromModel(group).toJson(),
     );
+
+    return GroupResponse.fromJson(createdGroupJson).toModel();
   }
 
   Stream<Group> getGroup({required String groupId}) {

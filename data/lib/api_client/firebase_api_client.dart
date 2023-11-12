@@ -42,31 +42,53 @@ class FirebaseApiClient implements ApiClient {
   }
 
   @override
-  Future<void> post({required String path, required Map<String, dynamic> data, bool merge = true}) async {
-    return client
-        .doc(path)
-        .set(data, SetOptions(merge: merge))
-        .onError((error, stackTrace) => throw NetworkException());
+  Future<Map<String, dynamic>> post(
+      {required String path, required Map<String, dynamic> data, bool merge = true}) async {
+    var collectionRef = client.collection(path);
+    DocumentReference docRef;
+
+    if (data.keys.contains('id') && data['id'].isEmpty) {
+      docRef = collectionRef.doc();
+      data['id'] = docRef.id;
+    } else {
+      docRef = collectionRef.doc(data['id']);
+    }
+
+    docRef.set(data, SetOptions(merge: merge)).onError((error, stackTrace) => throw NetworkException());
+
+    return data;
   }
 
   @override
-  Future<void> put({required String path, required Map<String, dynamic> data, bool merge = true}) async {
-    return client
-        .doc(path)
-        .set(data, SetOptions(merge: merge))
-        .onError((error, stackTrace) => throw NetworkException());
+  Future<Map<String, dynamic>> put(
+      {required String path, required Map<String, dynamic> data, bool merge = true}) async {
+    var docRef = client.doc(path);
+
+    docRef.set(data, SetOptions(merge: merge)).onError((error, stackTrace) => throw NetworkException());
+
+    return data;
   }
 
   @override
-  Future<void> patch({required String path, required Map<String, dynamic> data}) async {
-    return client.doc(path).update(data).onError((error, stackTrace) => throw NetworkException());
+  Future<Map<String, dynamic>> patch({required String path, required Map<String, dynamic> data}) async {
+    var docRef = client.doc(path);
+
+    docRef.update(data).onError((error, stackTrace) => throw NetworkException());
+
+    return data;
   }
 
   @override
-  Future<void> patchArray({required String path, required String fieldName, required List<dynamic> values}) async {
-    return client.doc(path).update({
-      fieldName: FieldValue.arrayUnion(values)
-    }).onError((error, stackTrace) => throw NetworkException());
+  Future<Map<String, dynamic>> patchArray({
+    required String path,
+    required String fieldName,
+    required List<dynamic> values,
+  }) async {
+    var docRef = client.doc(path);
+
+    docRef.update({fieldName: FieldValue.arrayUnion(values)}).onError((error, stackTrace) => throw NetworkException());
+
+    return {fieldName: values};
   }
 
   @override

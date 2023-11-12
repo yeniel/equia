@@ -22,7 +22,7 @@ class GroupInvitationsRepository {
   Future<void> createInvitation({required GroupInvitation groupInvitation}) async {
     String email = (await userRepository.getUser().last).profile.email;
 
-    await client.post(
+    await client.put(
       path: '$basePath/$email',
       data: GroupInvitationResponse.fromModel(groupInvitation).toJson(),
     );

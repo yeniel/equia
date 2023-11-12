@@ -46,23 +46,13 @@ class AppViewState extends State<AppView> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        primarySwatch: Colors.deepPurple,
+      ),
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
         primarySwatch: Colors.purple,
       ),
-      // theme: ThemeData(
-      //   colorScheme: const ColorScheme(
-      //     brightness: Brightness.light,
-      //     primary: Colores.acelga,
-      //     onPrimary: Colors.white,
-      //     secondary: Colores.acelga,
-      //     onSecondary: Colors.white,
-      //     error: Colores.rabano,
-      //     onError: Colors.white,
-      //     background: Colors,
-      //     onBackground: onBackground,
-      //     surface: surface,
-      //     onSurface: onSurface,
-      //   ),
-      // ),
+      themeMode: ThemeMode.dark,
       navigatorKey: _navigatorKey,
       localizationsDelegates: const [
         AppLocalizations.delegate,

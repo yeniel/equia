@@ -1,5 +1,6 @@
 import 'package:data/data.dart';
 import 'package:domain/domain.dart';
+import 'package:equia/presentation/onboarding/group_create/onboarding_group_create.dart';
 import 'package:equia/presentation/onboarding/onboarding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,33 +23,36 @@ class OnboardingPage extends StatelessWidget {
           analyticsManager: context.read<AnalyticsManager>(),
         )..add(const OnboardingInitEvent());
       },
-      child: const OnboardingView(),
+      child: OnboardingView(),
     );
   }
 }
 
 class OnboardingView extends StatelessWidget {
-  const OnboardingView({Key? key}) : super(key: key);
+  final PageController controller = PageController();
+
+  OnboardingView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final PageController controller = PageController();
-
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: PageView(
           controller: controller,
-          children: const <Widget>[
-            Center(
-              child: OnboardingGroupPage(),
-            ),
-            Center(
-              child: Text('Second Page'),
-            ),
+          children: <Widget>[
+            OnboardingGroupInfoPage(onContinue: _onContinue),
+            OnboardingGroupCreatePage(onCreateGroup: _onCreateGroup),
           ],
         ),
       ),
     );
+  }
+
+  void _onContinue() {
+    controller.nextPage(duration: const Duration(milliseconds: 400), curve: Curves.easeInOut);
+  }
+
+  void _onCreateGroup() {
   }
 }

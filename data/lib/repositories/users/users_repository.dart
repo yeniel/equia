@@ -9,8 +9,8 @@ class UserRepository {
 
   static const basePath = 'users';
 
-  Future<String> get uid async {
-    return (await getUser().last).profile.uid;
+  String get uid {
+    return authService.currentProfile.uid;
   }
 
   Stream<UserModel> getUser() {
@@ -20,9 +20,7 @@ class UserRepository {
   }
 
   Future<void> updateUserProfile({required UserProfile userProfile}) async {
-    String uid = authService.currentProfile.uid;
-
-    await client.post(
+    await client.put(
       path: '$basePath/$uid',
       data: {
         'profile': UserProfileResponse.fromModel(userProfile).toJson(),
@@ -31,8 +29,6 @@ class UserRepository {
   }
 
   Future<void> joinGroup({required String groupId}) async {
-    String uid = authService.currentProfile.uid;
-
     await client.patch(
       path: '$basePath/$uid',
       data: {
