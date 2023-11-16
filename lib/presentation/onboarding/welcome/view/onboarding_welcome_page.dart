@@ -4,33 +4,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import '../onboarding_group_info.dart';
+import '../onboarding_welcome.dart';
 
-class OnboardingGroupInfoPage extends StatelessWidget {
-  const OnboardingGroupInfoPage({super.key, required this.onContinue});
+class OnboardingWelcomePage extends StatelessWidget {
+  const OnboardingWelcomePage({super.key, required this.onContinue});
 
   final VoidCallback onContinue;
 
   static Route route({required VoidCallback onContinue}) {
-    return MaterialPageRoute(builder: (_) => OnboardingGroupInfoPage(onContinue: onContinue));
+    return MaterialPageRoute(builder: (_) => OnboardingWelcomePage(onContinue: onContinue));
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => OnboardingGroupInfoBloc(
+      create: (_) => OnboardingWelcomeBloc(
         userRepository: RepositoryProvider.of<UserRepository>(context),
-        groupsRepository: RepositoryProvider.of<GroupsRepository>(context),
-        groupInvitationsRepository: RepositoryProvider.of<GroupInvitationsRepository>(context),
         analyticsManager: context.read<AnalyticsManager>(),
-      )..add(const OnboardingGroupInfoInitEvent()),
-      child: OnboardingGroupView(onContinue: onContinue),
+      )..add(const OnboardingWelcomeInitEvent()),
+      child: OnboardingWelcomeView(onContinue: onContinue),
     );
   }
 }
 
-class OnboardingGroupView extends StatelessWidget {
-  const OnboardingGroupView({Key? key, required this.onContinue}) : super(key: key);
+class OnboardingWelcomeView extends StatelessWidget {
+  const OnboardingWelcomeView({Key? key, required this.onContinue}) : super(key: key);
 
   final VoidCallback onContinue;
 
@@ -42,7 +40,7 @@ class OnboardingGroupView extends StatelessWidget {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16),
-        child: BlocBuilder<OnboardingGroupInfoBloc, OnboardingGroupInfoState>(
+        child: BlocBuilder<OnboardingWelcomeBloc, OnboardingWelcomeState>(
           builder: (context, state) {
             return Center(
               child: Column(
@@ -50,12 +48,12 @@ class OnboardingGroupView extends StatelessWidget {
                 children: [
                   const Icon(Icons.waving_hand, size: 150),
                   Text(
-                    S.onboarding_group_title(state.user.profile.displayName),
+                    S.onboarding_welcome_title(state.user.profile.displayName),
                     style: textTheme.headlineMedium,
                     textAlign: TextAlign.center,
                   ),
                   Text(
-                    S.onboarding_group_message,
+                    S.onboarding_welcome_message,
                     style: textTheme.bodyMedium,
                     textAlign: TextAlign.center,
                   ),

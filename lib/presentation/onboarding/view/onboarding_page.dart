@@ -6,6 +6,8 @@ import 'package:equia/presentation/onboarding/onboarding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../home/view/home_page.dart';
+
 class OnboardingPage extends StatelessWidget {
   const OnboardingPage({super.key});
 
@@ -43,9 +45,10 @@ class OnboardingView extends StatelessWidget {
           controller: controller,
           physics: const NeverScrollableScrollPhysics(),
           children: <Widget>[
-            OnboardingGroupInfoPage(onContinue: _nextPage),
+            OnboardingWelcomePage(onContinue: _nextPage),
             CreateGroupPage(onCreateGroup: _nextPage),
-            AddMemberPage(onAddMember: _nextPage)
+            AddMemberPage(onAddMember: _nextPage),
+            OnboardingSummaryPage(onContinue: () => _endOnboarding(context)),
           ],
         ),
       ),
@@ -54,5 +57,9 @@ class OnboardingView extends StatelessWidget {
 
   void _nextPage() {
     controller.nextPage(duration: const Duration(milliseconds: 400), curve: Curves.easeInOut);
+  }
+
+  void _endOnboarding(BuildContext context) {
+    Navigator.pushAndRemoveUntil<void>(context, HomePage.route(), (route) => false);
   }
 }

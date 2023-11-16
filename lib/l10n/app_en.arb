@@ -11,8 +11,8 @@
   "planner": "Planner",
   "time_bank": "Time Bank",
   "config": "Config",
-  "onboarding_group_title": "Hello {name}!",
-  "@onboarding_group_title": {
+  "onboarding_welcome_title": "Hello {name}!",
+  "@onboarding_welcome_title": {
     "placeholders": {
       "name": {
         "content": "{name}",
@@ -20,7 +20,7 @@
       }
     }
   },
-  "onboarding_group_message": "To start using Equia you will first have to create a group",
+  "onboarding_welcome_message": "To start using Equia you will first have to create a group",
   "onboarding_group_create": "Create group",
   "continue_button": "Continue",
   "group_name": "Group name",
@@ -29,5 +29,15 @@
   "add_member_description": "Add a new member to your group, putting their email",
   "member_email": "Email of the new member",
   "member_email_error": "Enter a valid email",
-  "add_member": "Add member"
+  "add_member": "Add member",
+  "onboarding_summary_title": "Well done {name}!",
+  "@onboarding_summary_title": {
+    "placeholders": {
+      "name": {
+        "content": "{name}",
+        "example": "Yeniel"
+      }
+    }
+  },
+  "onboarding_summary_message": "Now you can start using Equia"
 }
