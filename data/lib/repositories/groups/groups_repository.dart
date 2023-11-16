@@ -9,9 +9,13 @@ class GroupsRepository {
   static const basePath = 'groups';
 
   Future<Group> createGroup({required Group group}) async {
+    var newGroupJson = GroupResponse.fromModel(group).toJson();
+
+    newGroupJson['createdAt'] = DateTime.now().toUtc().toIso8601String();
+
     var createdGroupJson = await client.post(
       path: basePath,
-      data: GroupResponse.fromModel(group).toJson(),
+      data: newGroupJson,
     );
 
     return GroupResponse.fromJson(createdGroupJson).toModel();

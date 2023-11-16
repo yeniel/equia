@@ -24,8 +24,10 @@
   "onboarding_group_create": "Create group",
   "continue_button": "Continue",
   "group_name": "Group name",
+  "group_name_error": "Group name is required",
   "create_group": "Create group",
   "add_member_description": "Add a new member to your group, putting their email",
   "member_email": "Email of the new member",
+  "member_email_error": "Enter a valid email",
   "add_member": "Add member"
 }

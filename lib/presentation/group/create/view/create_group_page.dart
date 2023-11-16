@@ -56,12 +56,13 @@ class GroupCreateView extends StatelessWidget {
                         FormBuilderTextField(
                           key: groupNameFieldKey,
                           name: 'groupName',
+                          autovalidateMode: AutovalidateMode.disabled,
                           decoration: InputDecoration(
                             labelText: S.group_name,
-                            errorText: S.
+                            //errorText: S.group_name_error,
                           ),
                           validator: FormBuilderValidators.compose([
-                            FormBuilderValidators.required(),
+                            FormBuilderValidators.required(errorText: S.group_name_error),
                           ]),
                         ),
                       ],

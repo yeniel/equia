@@ -64,8 +64,8 @@ class AddView extends StatelessWidget {
                           name: 'memberEmail',
                           decoration: InputDecoration(labelText: S.member_email),
                           validator: FormBuilderValidators.compose([
-                            FormBuilderValidators.required(),
-                            FormBuilderValidators.email(),
+                            FormBuilderValidators.required(errorText: S.member_email_error),
+                            FormBuilderValidators.email(errorText: S.member_email_error),
                           ]),
                         ),
                       ],
@@ -73,13 +73,15 @@ class AddView extends StatelessWidget {
                   ),
                   FilledButton(
                     onPressed: () {
-                      var createEvent = AddMemberAddEvent(
-                        memberEmail: memberEmailFieldKey.currentState!.value as String,
-                      );
+                      if (formKey.currentState?.validate() ?? false) {
+                        var createEvent = AddMemberAddEvent(
+                          memberEmail: memberEmailFieldKey.currentState!.value as String,
+                        );
 
-                      context.read<AddMemberBloc>().add(createEvent);
+                        context.read<AddMemberBloc>().add(createEvent);
 
-                      onAddMember();
+                        onAddMember();
+                      }
                     },
                     child: Text(S.add_member),
                   ),

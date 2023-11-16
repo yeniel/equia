@@ -40,7 +40,7 @@ class UserRepository {
     await client.patch(
       path: '$basePath/$uid',
       data: {
-        'group': groupId,
+        'groupId': groupId,
       },
     );
   }
