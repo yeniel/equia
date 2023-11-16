@@ -41,7 +41,7 @@ class AddMemberBloc extends Bloc<AddMemberEvent, AddMemberState> {
       groupId: user.groupId,
     );
 
-    var createdInvitation = await _groupInvitationsRepository.createInvitation(groupInvitation: groupInvitation);
+    await _groupInvitationsRepository.createInvitation(groupInvitation: groupInvitation);
 
     emit(state);
   }

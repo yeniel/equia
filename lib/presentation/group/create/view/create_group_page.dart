@@ -56,10 +56,12 @@ class GroupCreateView extends StatelessWidget {
                         FormBuilderTextField(
                           key: groupNameFieldKey,
                           name: 'groupName',
-                          decoration: InputDecoration(labelText: S.group_name),
+                          decoration: InputDecoration(
+                            labelText: S.group_name,
+                            errorText: S.
+                          ),
                           validator: FormBuilderValidators.compose([
                             FormBuilderValidators.required(),
-                            FormBuilderValidators.email(),
                           ]),
                         ),
                       ],
@@ -67,13 +69,15 @@ class GroupCreateView extends StatelessWidget {
                   ),
                   FilledButton(
                     onPressed: () {
-                      var createEvent = CreateGroupCreateEvent(
-                        groupName: groupNameFieldKey.currentState!.value as String,
-                      );
+                      if (formKey.currentState?.validate() ?? false) {
+                        var createEvent = CreateGroupCreateEvent(
+                          groupName: groupNameFieldKey.currentState!.value as String,
+                        );
 
-                      context.read<CreateGroupBloc>().add(createEvent);
+                        context.read<CreateGroupBloc>().add(createEvent);
 
-                      onCreateGroup();
+                        onCreateGroup();
+                      }
                     },
                     child: Text(S.create_group),
                   ),

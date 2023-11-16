@@ -24,5 +24,8 @@
   "onboarding_group_create": "Crear grupo",
   "continue_button": "Continuar",
   "group_name": "Nombre del grupo",
-  "create_group": "Crear grupo"
+  "create_group": "Crear grupo",
+  "add_member_description": "Añade un nuevo miembro a tu grupo introduciendo su email",
+  "member_email": "Email del nuevo miembro",
+  "add_member": "Añadir miembro"
 }

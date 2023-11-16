@@ -46,11 +46,12 @@ class AppViewState extends State<AppView> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.deepPurple,
+        primarySwatch: Colors.purple,
       ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
         primarySwatch: Colors.purple,
+        scaffoldBackgroundColor: Colors.black,
       ),
       themeMode: ThemeMode.dark,
       navigatorKey: _navigatorKey,
