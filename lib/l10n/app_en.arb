@@ -39,5 +39,7 @@
       }
     }
   },
-  "onboarding_summary_message": "Now you can start using Equia"
+  "onboarding_summary_message": "Now you can start using Equia",
+  "group_invitation": "You have been invited to join the group",
+  "join": "Join"
 }

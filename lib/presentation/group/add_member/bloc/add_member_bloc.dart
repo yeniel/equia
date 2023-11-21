@@ -35,10 +35,16 @@ class AddMemberBloc extends Bloc<AddMemberEvent, AddMemberState> {
   ) async {
     var user = await _userRepository.getUser();
 
+    if (user == null) {
+      return emit(state);
+    }
+
     var groupInvitation = GroupInvitation(
-      fromUserId: _userRepository.uid,
+      fromUserId: user.profile.uid,
+      fromUserName: user.profile.displayName,
       toUserEmail: event.memberEmail,
       groupId: user.groupId,
+      status: GroupInvitationStatus.pending,
     );
 
     await _groupInvitationsRepository.createInvitation(groupInvitation: groupInvitation);

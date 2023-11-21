@@ -13,18 +13,28 @@ class UserRepository {
     return authService.currentProfile.uid;
   }
 
-  Future<UserModel> getUser() async {
+  Future<UserModel?> getUser() async {
     String uid = authService.currentProfile.uid;
 
     var response = await client.get(path: '$basePath/$uid');
 
+    if (response == null) {
+      return Future.value(null);
+    }
+
     return UserResponse.fromJson(response).toModel();
   }
 
-  Stream<UserModel> getUserStream() {
+  Stream<UserModel?> getUserStream() {
     String uid = authService.currentProfile.uid;
 
-    return client.getStream(path: '$basePath/$uid').map((data) => UserResponse.fromJson(data).toModel());
+    return client.getStream(path: '$basePath/$uid').map((data) {
+      if (data == null) {
+        return null;
+      }
+
+      return UserResponse.fromJson(data).toModel();
+    });
   }
 
   Future<void> updateUserProfile({required UserProfile userProfile}) async {

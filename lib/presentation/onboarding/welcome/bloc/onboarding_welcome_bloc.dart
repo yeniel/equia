@@ -25,6 +25,10 @@ class OnboardingWelcomeBloc extends Bloc<OnboardingWelcomeEvent, OnboardingWelco
   ) async {
     var user = await _userRepository.getUser();
 
-    emit(state.copyWith(user: user));
+    if (user == null) {
+      return emit(state);
+    } else {
+      emit(state.copyWith(user: user));
+    }
   }
 }

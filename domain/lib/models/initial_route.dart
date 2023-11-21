@@ -1,1 +1,1 @@
-enum InitialRoute { onboarding, home }
+enum InitialRoute { onboarding, invitation, home }

@@ -15,7 +15,6 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16),
@@ -64,7 +63,7 @@ class LoginView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(S.loginHead, style: textTheme.headlineMedium, textAlign: TextAlign.center),
-            const Image(image: AssetImage('assets/equia_logo_1024.png')),
+            const Image(image: AssetImage('assets/equia_logo_1024.png'), color: Colors.white),
             const SizedBox(height: 8),
             _LoginButton(),
           ],

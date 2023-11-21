@@ -26,9 +26,13 @@ class AccountBloc extends Bloc<AccountEvent, AccountState> {
   Future<void> _onAccountInitEvent(AccountInitEvent event, Emitter<AccountState> emit) async {
     _analyticsManager.logEvent(AccountPageEvent());
 
-    await emit.forEach<UserModel>(
+    await emit.forEach<UserModel?>(
       _userRepository.getUserStream(),
       onData: (user) {
+        if (user == null) {
+          return state.copyWith(user: null);
+        }
+
         return state.copyWith(user: user);
       },
       onError: (_, __) => state,

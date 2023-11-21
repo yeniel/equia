@@ -47,6 +47,7 @@ class GroupCreateView extends StatelessWidget {
             return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   const Icon(Icons.groups, size: 150),
                   FormBuilder(

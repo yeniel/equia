@@ -21,8 +21,14 @@ class GroupsRepository {
     return GroupResponse.fromJson(createdGroupJson).toModel();
   }
 
-  Stream<Group> getGroup({required String groupId}) {
-    return client.getStream(path: '$basePath/$groupId').map((data) => GroupResponse.fromJson(data).toModel());
+  Stream<Group?> getGroup({required String groupId}) {
+    return client.getStream(path: '$basePath/$groupId').map((data) {
+      if (data == null) {
+        return null;
+      }
+
+      return GroupResponse.fromJson(data).toModel();
+    });
   }
 
   Future<void> addMember({required String groupId, required String memberId}) async {

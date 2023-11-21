@@ -9,14 +9,34 @@ class GroupInvitationsRepository {
 
   static const basePath = 'group_invitations';
 
-  Future<GroupInvitation> getInvitation() async {
-    var user = await userRepository.getUser();
-    var invitationResponse = await client.get(path: '$basePath/${user.profile.email}');
+  Future<GroupInvitation?> getInvitation() async {
+    try {
+      var user = await userRepository.getUser();
 
-    return GroupInvitationResponse.fromJson(invitationResponse).toModel();
+      if (user == null) {
+        return Future.value(null);
+      }
+
+      var invitationResponse = await client.get(path: '$basePath/${user.profile.email}');
+
+      if (invitationResponse == null) {
+        return Future.value(null);
+      }
+
+      return GroupInvitationResponse.fromJson(invitationResponse).toModel();
+    } catch (e) {
+      return Future.value(null);
+    }
   }
 
   Future<void> createInvitation({required GroupInvitation groupInvitation}) async {
+    await client.put(
+      path: '$basePath/${groupInvitation.toUserEmail}',
+      data: GroupInvitationResponse.fromModel(groupInvitation).toJson(),
+    );
+  }
+
+  Future<void> updateInvitation({required GroupInvitation groupInvitation}) async {
     await client.put(
       path: '$basePath/${groupInvitation.toUserEmail}',
       data: GroupInvitationResponse.fromModel(groupInvitation).toJson(),

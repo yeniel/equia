@@ -10,12 +10,11 @@ class FirebaseApiClient implements ApiClient {
   late FirebaseFirestore client;
 
   @override
-  Future<Map<String, dynamic>> get({required String path}) async {
+  Future<Map<String, dynamic>?> get({required String path}) async {
     final docRef = client.doc(path);
-    const source = Source.cache;
 
-    return docRef.get(const GetOptions(source: source)).then((DocumentSnapshot document) {
-      return document.data() as Map<String, dynamic>;
+    return docRef.get().then((DocumentSnapshot document) {
+      return document.data() as Map<String, dynamic>?;
     }, onError: (error) {
       throw NetworkException();
     });

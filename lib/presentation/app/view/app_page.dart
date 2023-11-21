@@ -1,5 +1,6 @@
 import 'package:data/data.dart';
 import 'package:domain/domain.dart';
+import 'package:equia/presentation/group/join/join_group.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -20,6 +21,7 @@ class App extends StatelessWidget {
       create: (_) => AppBloc(
         authService: context.read<AuthService>(),
         userRepository: context.read<UserRepository>(),
+        groupInvitationsRepository: context.read<GroupInvitationsRepository>(),
         analyticsManager: context.read<AnalyticsManager>(),
       ),
       child: const AppView(),
@@ -79,8 +81,12 @@ class AppViewState extends State<AppView> {
                   case InitialRoute.onboarding:
                     route = OnboardingPage.route();
                     break;
+                  case InitialRoute.invitation:
+                    route = JoinGroupPage.route(onJoinGroup: () {
+                      _navigator.pushAndRemoveUntil<void>(HomePage.route(), (route) => false);
+                    });
+                    break;
                 }
-                route = OnboardingPage.route();
                 break;
               case AppAuthStatus.unauthenticated:
               case AppAuthStatus.unknown:

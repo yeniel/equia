@@ -3,8 +3,8 @@ import 'package:equia/presentation/config/config.dart';
 import 'package:equia/presentation/home/home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -39,21 +39,36 @@ class _HomeViewState extends State<HomeView> {
       index: 0,
       icon: Icons.view_agenda,
       selectedIcon: Icons.view_agenda_outlined,
-      route: () => MaterialPageRoute(builder: (_) => Scaffold(appBar: AppBar(title: const Text("Agenda"),),body: Container())),
+      route: () => MaterialPageRoute(
+          builder: (_) => Scaffold(
+              appBar: AppBar(
+                title: const Text("Agenda"),
+              ),
+              body: Container())),
     ),
     Destination(
       key: GlobalKey(),
       index: 1,
       icon: Icons.compare,
       selectedIcon: Icons.compare_outlined,
-      route: () => MaterialPageRoute(builder: (_) => Scaffold(appBar: AppBar(title: const Text("Planificación"),),body: Container())),
+      route: () => MaterialPageRoute(
+          builder: (_) => Scaffold(
+              appBar: AppBar(
+                title: const Text("Planificación"),
+              ),
+              body: Container())),
     ),
     Destination(
       key: GlobalKey(),
       index: 2,
       icon: Icons.more_time,
       selectedIcon: Icons.more_time_outlined,
-      route: () => MaterialPageRoute(builder: (_) => Scaffold(appBar: AppBar(title: const Text("Banco de Tiempo"),),body: Container())),
+      route: () => MaterialPageRoute(
+          builder: (_) => Scaffold(
+              appBar: AppBar(
+                title: const Text("Banco de Tiempo"),
+              ),
+              body: Container())),
     ),
     Destination(
       key: GlobalKey(),
@@ -90,9 +105,7 @@ class _HomeViewState extends State<HomeView> {
       floatingActionButton: FloatingActionButton.small(
         shape: const CircleBorder(),
         onPressed: () {
-          setState(() {
-
-          });
+          setState(() {});
         },
         child: const Icon(Icons.add),
       ),
@@ -163,7 +176,7 @@ class _HomeViewState extends State<HomeView> {
   }) {
     return TargetFocus(
       identify: identify,
-      //keyTarget: keyTarget,
+      keyTarget: keyTarget,
       alignSkip: Alignment.bottomLeft,
       enableOverlayTab: true,
       enableTargetTab: true,

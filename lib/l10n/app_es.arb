@@ -9,7 +9,7 @@
   "account": "Cuenta",
   "agenda": "Agenda",
   "planner": "Planificador",
-  "time_bank": "Banco de tiempo",
+  "time_bank": "Banco tiempo",
   "config": "Configuración",
   "onboarding_welcome_title": "Hola {name}!",
   "@onboarding_welcome_title": {
@@ -39,5 +39,7 @@
       }
     }
   },
-  "onboarding_summary_message": "Ahora ya puedes usar Equia"
+  "onboarding_summary_message": "Ahora ya puedes usar Equia",
+  "group_invitation": "Te han invitado al grupo",
+  "join": "Join"
 }

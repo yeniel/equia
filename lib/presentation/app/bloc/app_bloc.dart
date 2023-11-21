@@ -12,11 +12,13 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   AppBloc({
     required AuthService authService,
     required UserRepository userRepository,
+    required GroupInvitationsRepository groupInvitationsRepository,
     required AnalyticsManager analyticsManager,
   })  : _authService = authService,
         _userRepository = userRepository,
+        _groupInvitationsRepository = groupInvitationsRepository,
         _analyticsManager = analyticsManager,
-        super(const AppState.unknown()) {
+        super(const AppState(authStatus: AppAuthStatus.unknown)) {
     on<AppStatusChanged>(_onAuthenticationStatusChanged);
 
     _authenticationStatusSubscription = _authService.status.listen(
@@ -26,6 +28,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
   final AuthService _authService;
   final UserRepository _userRepository;
+  final GroupInvitationsRepository _groupInvitationsRepository;
   final AnalyticsManager _analyticsManager;
   late StreamSubscription<AppAuthStatus> _authenticationStatusSubscription;
 
@@ -41,7 +44,9 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   ) async {
     switch (event.status) {
       case AppAuthStatus.unauthenticated:
-        return emit(const AppState.unauthenticated());
+        return emit(state.copyWith(
+          authStatus: AppAuthStatus.unauthenticated,
+        ));
       case AppAuthStatus.authenticated:
         if (_authService.isLoggedIn) {
           var currentUserProfile = _authService.currentProfile;
@@ -49,22 +54,35 @@ class AppBloc extends Bloc<AppEvent, AppState> {
           _userRepository.updateUserProfile(userProfile: currentUserProfile);
           _analyticsManager.setUserId(currentUserProfile.uid);
 
-          await emit.forEach<UserModel>(
-            _userRepository.getUserStream(),
-            onData: (user) {
-              if (user.hasGroup) {
-                return const AppState.authenticated();
+          var user = await _userRepository.getUser();
+
+          if (user != null) {
+            if (user.hasGroup) {
+              emit(state.copyWith(
+                authStatus: AppAuthStatus.authenticated,
+                initialRoute: InitialRoute.home,
+              ));
+            } else {
+              var groupInvitation = await _groupInvitationsRepository.getInvitation();
+
+              if (groupInvitation != null && groupInvitation.status == GroupInvitationStatus.pending) {
+                emit(state.copyWith(
+                  authStatus: AppAuthStatus.authenticated,
+                  initialRoute: InitialRoute.invitation,
+                ));
               } else {
-                return const AppState.authenticatedNewUser();
+                emit(state.copyWith(
+                  authStatus: AppAuthStatus.authenticated,
+                  initialRoute: InitialRoute.onboarding,
+                ));
               }
-            },
-            onError: (_, __) => state,
-          );
-        } else {
-          return emit(const AppState.unauthenticated());
+            }
+          }
         }
+
+        break;
       default:
-        return emit(const AppState.unknown());
+        return emit(state.copyWith(authStatus: AppAuthStatus.unknown));
     }
   }
 }

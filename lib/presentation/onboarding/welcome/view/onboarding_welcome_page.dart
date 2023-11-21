@@ -45,6 +45,7 @@ class OnboardingWelcomeView extends StatelessWidget {
             return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   const Icon(Icons.waving_hand, size: 150),
                   Text(

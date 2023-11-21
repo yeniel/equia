@@ -25,6 +25,10 @@ class OnboardingSummaryBloc extends Bloc<OnboardingSummaryEvent, OnboardingSumma
   ) async {
     var user = await _userRepository.getUser();
 
-    emit(state.copyWith(user: user));
+    if (user == null) {
+      return emit(state);
+    } else {
+      emit(state.copyWith(user: user));
+    }
   }
 }

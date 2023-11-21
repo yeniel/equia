@@ -6,11 +6,6 @@ class AppState extends Equatable {
     this.initialRoute = InitialRoute.home,
   });
 
-  const AppState.unknown() : this();
-  const AppState.unauthenticated() : this(authStatus: AppAuthStatus.unauthenticated);
-  const AppState.authenticated() : this(authStatus: AppAuthStatus.authenticated);
-  const AppState.authenticatedNewUser() : this(authStatus: AppAuthStatus.authenticated, initialRoute: InitialRoute.onboarding);
-
   final AppAuthStatus authStatus;
   final InitialRoute initialRoute;
 
