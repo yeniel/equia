@@ -1,6 +1,7 @@
 import 'package:domain/domain.dart';
 import 'package:equia/presentation/config/config.dart';
 import 'package:equia/presentation/home/home.dart';
+import 'package:equia/presentation/home/view/add_chore_fab.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -102,13 +103,7 @@ class _HomeViewState extends State<HomeView> {
     ];
 
     return Scaffold(
-      floatingActionButton: FloatingActionButton.small(
-        shape: const CircleBorder(),
-        onPressed: () {
-          setState(() {});
-        },
-        child: const Icon(Icons.add),
-      ),
+      floatingActionButton: const AddChoreFAB(),
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) {
           setState(() {

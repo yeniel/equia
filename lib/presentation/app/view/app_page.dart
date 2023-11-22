@@ -47,13 +47,24 @@ class AppViewState extends State<AppView> {
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.purple,
-      ),
       darkTheme: ThemeData(
         brightness: Brightness.dark,
         primarySwatch: Colors.purple,
         scaffoldBackgroundColor: Colors.black,
+        floatingActionButtonTheme: const FloatingActionButtonThemeData(
+          backgroundColor: Colors.purple,
+          foregroundColor: Colors.white,
+        ),
+        navigationBarTheme: NavigationBarThemeData(
+          indicatorColor: Colors.purple,
+          labelTextStyle: MaterialStateProperty.resolveWith((states) {
+            if (states.contains(MaterialState.selected)) {
+              return const TextStyle(color: Colors.white);
+            }
+
+            return const TextStyle(color: Colors.white54);
+          }),
+        ),
       ),
       themeMode: ThemeMode.dark,
       navigatorKey: _navigatorKey,
