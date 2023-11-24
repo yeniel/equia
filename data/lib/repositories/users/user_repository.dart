@@ -14,8 +14,6 @@ class UserRepository {
   }
 
   Future<UserModel?> getUser() async {
-    String uid = authService.currentProfile.uid;
-
     var response = await client.get(path: '$basePath/$uid');
 
     if (response == null) {
@@ -26,8 +24,6 @@ class UserRepository {
   }
 
   Stream<UserModel?> getUserStream() {
-    String uid = authService.currentProfile.uid;
-
     return client.getStream(path: '$basePath/$uid').map((data) {
       if (data == null) {
         return null;

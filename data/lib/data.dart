@@ -2,6 +2,9 @@ library domain;
 
 export 'api_client/api_client.dart';
 export 'api_client/firebase_api_client.dart';
+export 'repositories/chores/chore_response.dart';
+export 'repositories/chores/chore_type_response.dart';
+export 'repositories/chores/chores_repository.dart';
 export 'repositories/group_invitations/group_invitation_response.dart';
 export 'repositories/group_invitations/group_invitations_repository.dart';
 export 'repositories/groups/group_response.dart';
