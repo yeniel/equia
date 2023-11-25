@@ -1,4 +1,5 @@
 import 'package:domain/domain.dart';
+import 'package:equia/presentation/agenda/agenda.dart';
 import 'package:equia/presentation/config/config.dart';
 import 'package:equia/presentation/home/home.dart';
 import 'package:equia/presentation/home/view/add_chore_fab.dart';
@@ -40,12 +41,7 @@ class _HomeViewState extends State<HomeView> {
       index: 0,
       icon: Icons.view_agenda,
       selectedIcon: Icons.view_agenda_outlined,
-      route: () => MaterialPageRoute(
-          builder: (_) => Scaffold(
-              appBar: AppBar(
-                title: const Text("Agenda"),
-              ),
-              body: Container())),
+      route: () => AgendaPage.route(),
     ),
     Destination(
       key: GlobalKey(),
